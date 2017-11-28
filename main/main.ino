@@ -1,5 +1,5 @@
 /*
-  Sprint Two Integrate
+  Main
 
   Causes flower to bloom and turn when the sensor detects motion
   within two feet of the front of the archway. Plays the C scale
