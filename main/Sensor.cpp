@@ -4,6 +4,7 @@
  
 #include "Sensor.h"
 
+// Initialize VL53L0X sensors
 VL53L0X sensor1;
 VL53L0X sensor2;
 VL53L0X sensor3;
@@ -11,6 +12,7 @@ VL53L0X sensor4;
 VL53L0X sensor5;
 
 void sensorSetup() {
+  // Initialize shutdown pins
   const int SHDN1 = 4;
   const int SHDN2 = 12;
   const int SHDN3 = 7;
@@ -78,7 +80,7 @@ void sensorSetup() {
   sensor5.startContinuous();
 }
 
-void sensorRead() {
+void sensorReadSerial() {
   Serial.print(sensor1.readRangeContinuousMillimeters());
   Serial.print(',');
   Serial.print(sensor2.readRangeContinuousMillimeters());

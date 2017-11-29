@@ -17,25 +17,28 @@ Servo turn2;
 Servo bloom3;
 Servo turn3;
 
-const int speaker = 3;
+//const int speaker = 3;
 
 int bloomPos = 80;
 int turnPos = 35;
 
 int sensorVal = 0;
 
-// notes in the melody:
-int melody[] = {
-  NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
-};
-
-// note durations: 4 = quarter note, 8 = eighth note, etc.:
-int noteDurations[] = {
-  4, 8, 8, 4, 4, 4, 4, 4
-};
+//// notes in the melody:
+//int melody[] = {
+//  NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
+//};
+//
+//// note durations: 4 = quarter note, 8 = eighth note, etc.:
+//int noteDurations[] = {
+//  4, 8, 8, 4, 4, 4, 4, 4
+//};
 
 void setup() {
   sensorSetup();
+  int something = 0;
+  Serial.println(something);
+  
   bloom1.attach(3);
   turn1.attach(5);
   bloom2.attach(6);
@@ -49,12 +52,11 @@ void setup() {
   turn2.write(turnPos);
   bloom3.write(bloomPos);
   turn3.write(turnPos);  
-//  Serial.begin(9600);
 }
 
 void loop() {
   // read sensor value regularly
-  sensorRead();
+  sensorReadSerial();
 
   // if sensor value surpasses threshold
   if (sensorVal > 400) {
@@ -74,7 +76,7 @@ void loop() {
       turn3.write(turnPos);
       delay(20);
     }
-//
+
 //    // play obnoxious melody
 //    // iterate over the notes of the melody:
 //    for (int thisNote = 0; thisNote < 8; thisNote++) {
