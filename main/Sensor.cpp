@@ -8,28 +8,28 @@ VL53L0X sensor1;
 VL53L0X sensor2;
 VL53L0X sensor3;
 VL53L0X sensor4;
-//VL53L0X sensor5;
+VL53L0X sensor5;
 
 void sensorSetup() {
   const int SHDN1 = 4;
-  const int SHDN2 = 5;
-  const int SHDN3 = 6;
-  const int SHDN4 = 7;
-  //const int SHDN5 = 8;
+  const int SHDN2 = 12;
+  const int SHDN3 = 7;
+  const int SHDN4 = 13;
+  const int SHDN5 = 8;
 
   // Set shutdown pins to output mode
   pinMode(SHDN1, OUTPUT);
   pinMode(SHDN2, OUTPUT);
   pinMode(SHDN3, OUTPUT);
   pinMode(SHDN4, OUTPUT);
-//  pinMode(SHDN5, OUTPUT);
+  pinMode(SHDN5, OUTPUT);
 
   // Pull all shutdown pins low
   digitalWrite(SHDN1, LOW);
   digitalWrite(SHDN2, LOW);
   digitalWrite(SHDN3, LOW);
   digitalWrite(SHDN4, LOW);
-//  digitalWrite(SHDN5, LOW);
+  digitalWrite(SHDN5, LOW);
   delay(500);
 
   // Begin
@@ -64,18 +64,18 @@ void sensorSetup() {
   delay(100);
   sensor4.setAddress((uint8_t)24);
 
-//  // Set address for fifth sensor
-//  digitalWrite(SHDN5, HIGH);
-//  delay(150);
-//  sensor5.init(true);
-//  delay(100);
-//  sensor5.setAddress((uint8_t)25);
+  // Set address for fifth sensor
+  digitalWrite(SHDN5, HIGH);
+  delay(150);
+  sensor5.init(true);
+  delay(100);
+  sensor5.setAddress((uint8_t)25);
 
   sensor1.startContinuous();
   sensor2.startContinuous();
   sensor3.startContinuous();
   sensor4.startContinuous();
-//  sensor5.startContinuous();
+  sensor5.startContinuous();
 }
 
 void sensorRead() {
@@ -86,8 +86,8 @@ void sensorRead() {
   Serial.print(sensor3.readRangeContinuousMillimeters());
   Serial.print(',');
   Serial.print(sensor4.readRangeContinuousMillimeters());
-//  Serial.print(',');
-//  Serial.print(sensor5.readRangeContinuousMillimeters());
+  Serial.print(',');
+  Serial.print(sensor5.readRangeContinuousMillimeters());
   Serial.println();
   
 //  // Uncomment to check for device addresses
