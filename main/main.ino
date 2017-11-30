@@ -18,6 +18,8 @@ VL53L0X sensor3;
 VL53L0X sensor4;
 VL53L0X sensor5;
 
+// Initialize sensor value holders
+
 Servo bloom1;
 Servo turn1;
 Servo bloom2;
@@ -63,11 +65,9 @@ void setup() {
 }
 
 void loop() {
-  // read sensor value regularly
-  sensorReadInd(sensor1);
-
   // if sensor value surpasses threshold
-  if (sensorVal > 400) {
+  sensorReadInd(sensor1);
+  if (sensor1.readRangeContinuousMillimeters() > 400) {
 
     // open petals
     for (bloomPos = 80; bloomPos >= 0; bloomPos -= 1) {
