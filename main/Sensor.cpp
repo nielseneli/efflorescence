@@ -80,8 +80,17 @@ void sensorSetup() {
   sensor5.startContinuous();
 }
 
-void sensorReadInd(VL53L0X &sensor1){
-  Serial.println(sensor1.readRangeContinuousMillimeters());
+void sensorReadInd(VL53L0X &sensor) {
+  Serial.println(sensor.readRangeContinuousMillimeters());
+}
+
+int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge) {
+  if (sensor.readRangeContinuousMillimeters() > minEdge && sensor.readRangeContinuousMillimeters() < maxEdge) {
+    return 1; 
+  }
+  else {
+    return 0;
+  }
 }
 
 void sensorReadSerial() {

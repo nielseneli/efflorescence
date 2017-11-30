@@ -46,8 +46,6 @@ int sensorVal = 0;
 
 void setup() {
   sensorSetup();
-  int something = 12;
-  Serial.println(something);
   
   bloom1.attach(3);
   turn1.attach(5);
@@ -66,57 +64,8 @@ void setup() {
 
 void loop() {
   // if sensor value surpasses threshold
-  sensorReadInd(sensor1);
-  if (sensor1.readRangeContinuousMillimeters() > 400) {
-
-    // open petals
-    for (bloomPos = 80; bloomPos >= 0; bloomPos -= 1) {
-      bloom1.write(bloomPos);
-      bloom2.write(bloomPos);
-      bloom3.write(bloomPos);
-      delay(20);
-    }
-  
-    // turn flower to "follow" person through archway
-    for (turnPos = 35; turnPos <= 135; turnPos += 1) {
-      turn1.write(turnPos);
-      turn2.write(turnPos);
-      turn3.write(turnPos);
-      delay(20);
-    }
-
-//    // play obnoxious melody
-//    // iterate over the notes of the melody:
-//    for (int thisNote = 0; thisNote < 8; thisNote++) {
-//  
-//      // to calculate the note duration, take one second divided by the note type.
-//      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-//      int noteDuration = 1000 / noteDurations[thisNote];
-//      tone(speaker, melody[thisNote], noteDuration);
-//  
-//      // to distinguish the notes, set a minimum time between them.
-//      // the note's duration + 30% seems to work well:
-//      int pauseBetweenNotes = noteDuration * 1.30;
-//      delay(pauseBetweenNotes);
-//      // stop the tone playing:
-//      noTone(speaker);
-//    }
-//
-    // turn back to original position
-    for (turnPos = 135; turnPos >= 35; turnPos -= 1) {
-      turn1.write(turnPos);
-      turn2.write(turnPos);
-      turn3.write(turnPos);
-      delay(20);
-    }
-    
-    // close petals
-    for (bloomPos = 0; bloomPos <= 80; bloomPos += 1) {
-      bloom1.write(bloomPos);
-      bloom2.write(bloomPos);
-      bloom3.write(bloomPos);
-      delay(20);
-    }
-  }
+  Serial.print(sensor1.readRangeContinuousMillimeters());
+  Serial.print(',');
+  Serial.println(sensorTriggered(sensor1, 400, 600));
 }
 
