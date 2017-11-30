@@ -9,8 +9,7 @@
 #include <VL53L0X.h>
 
 void sensorSetup();
-void modifySomething(int something);
-void sensorReadVals(int sensorVal1, int sensorVal2, int sensorVal3, int sensorVal4, int sensorVal5);
+void sensorReadInd(VL53L0X &sensor);
 void sensorReadSerial();
 
 #endif

@@ -9,6 +9,14 @@
 #include <Servo.h>
 #include "pitches.h"
 #include "Sensor.h"
+#include <VL53L0X.h>
+
+// Initialize VL53L0X sensors
+VL53L0X sensor1;
+VL53L0X sensor2;
+VL53L0X sensor3;
+VL53L0X sensor4;
+VL53L0X sensor5;
 
 Servo bloom1;
 Servo turn1;
@@ -36,7 +44,7 @@ int sensorVal = 0;
 
 void setup() {
   sensorSetup();
-  int something = 0;
+  int something = 12;
   Serial.println(something);
   
   bloom1.attach(3);
@@ -56,7 +64,7 @@ void setup() {
 
 void loop() {
   // read sensor value regularly
-  sensorReadSerial();
+  sensorReadInd(sensor1);
 
   // if sensor value surpasses threshold
   if (sensorVal > 400) {
