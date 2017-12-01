@@ -5,33 +5,37 @@
 #include "Sensor.h"
 
 // Initialize VL53L0X sensors
+extern VL53L0X sensor0;
 extern VL53L0X sensor1;
 extern VL53L0X sensor2;
 extern VL53L0X sensor3;
 extern VL53L0X sensor4;
-extern VL53L0X sensor5;
+
+extern int sensorVals[];
+extern int minVals[];
+extern int maxVals[];
 
 void sensorSetup() {
   // Initialize shutdown pins
-  const int SHDN1 = 4;
-  const int SHDN2 = 12;
-  const int SHDN3 = 7;
-  const int SHDN4 = 13;
-  const int SHDN5 = 8;
+  const int SHDN0 = 4;
+  const int SHDN1 = 12;
+  const int SHDN2 = 7;
+  const int SHDN3 = 13;
+  const int SHDN4 = 8;
 
   // Set shutdown pins to output mode
+  pinMode(SHDN0, OUTPUT);
   pinMode(SHDN1, OUTPUT);
   pinMode(SHDN2, OUTPUT);
   pinMode(SHDN3, OUTPUT);
   pinMode(SHDN4, OUTPUT);
-  pinMode(SHDN5, OUTPUT);
 
   // Pull all shutdown pins low
+  digitalWrite(SHDN0, LOW);
   digitalWrite(SHDN1, LOW);
   digitalWrite(SHDN2, LOW);
   digitalWrite(SHDN3, LOW);
   digitalWrite(SHDN4, LOW);
-  digitalWrite(SHDN5, LOW);
   delay(500);
 
   // Begin
@@ -39,45 +43,45 @@ void sensorSetup() {
   Serial.begin (9600);
 
   // Set address for first sensor
+  digitalWrite(SHDN0, HIGH);
+  delay(150);
+  sensor0.init(true);
+  delay(100);
+  sensor0.setAddress((uint8_t)21);
+
+  // Set address for second sensor
   digitalWrite(SHDN1, HIGH);
   delay(150);
   sensor1.init(true);
   delay(100);
-  sensor1.setAddress((uint8_t)21);
+  sensor1.setAddress((uint8_t)22);
 
-  // Set address for second sensor
+  // Set address for third sensor
   digitalWrite(SHDN2, HIGH);
   delay(150);
   sensor2.init(true);
   delay(100);
-  sensor2.setAddress((uint8_t)22);
+  sensor2.setAddress((uint8_t)23);
 
-  // Set address for third sensor
+  // Set address for fourth sensor
   digitalWrite(SHDN3, HIGH);
   delay(150);
   sensor3.init(true);
   delay(100);
-  sensor3.setAddress((uint8_t)23);
+  sensor3.setAddress((uint8_t)24);
 
-  // Set address for fourth sensor
+  // Set address for fifth sensor
   digitalWrite(SHDN4, HIGH);
   delay(150);
   sensor4.init(true);
   delay(100);
-  sensor4.setAddress((uint8_t)24);
+  sensor4.setAddress((uint8_t)25);
 
-  // Set address for fifth sensor
-  digitalWrite(SHDN5, HIGH);
-  delay(150);
-  sensor5.init(true);
-  delay(100);
-  sensor5.setAddress((uint8_t)25);
-
+  sensor0.startContinuous();
   sensor1.startContinuous();
   sensor2.startContinuous();
   sensor3.startContinuous();
   sensor4.startContinuous();
-  sensor5.startContinuous();
 }
 
 void sensorReadInd(VL53L0X &sensor) {
@@ -93,7 +97,27 @@ int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge) {
   }
 }
 
+//void whichSensorTriggered(VL53L0X &sensor0, VL53L0X &sensor1, VL53L0X &sensor2, VL53L0X &sensor3, VL53L0X &sensor4, int sensorVals[], int minVals[], int maxVals[]) {
+//  if (sensorTriggered(sensor0, minVals[0], maxVals[0])) {
+//    sensorVals[0] = 1;
+//  }
+//  if (sensorTriggered(sensor1, minVals[1], maxVals[1])) {
+//    sensorVals[1] = 1;
+//  }
+//  if (sensorTriggered(sensor2, minVals[2], maxVals[2])) {
+//    sensorVals[2] = 1;
+//  }
+//  if (sensorTriggered(sensor3, minVals[3], maxVals[3])) {
+//    sensorVals[3] = 1;
+//  }
+//  if (sensorTriggered(sensor4, minVals[4], maxVals[4])) {
+//    sensorVals[4] = 1;
+//  }
+//}
+
 void sensorReadSerial() {
+  Serial.print(sensor0.readRangeContinuousMillimeters());
+  Serial.print(',');
   Serial.print(sensor1.readRangeContinuousMillimeters());
   Serial.print(',');
   Serial.print(sensor2.readRangeContinuousMillimeters());
@@ -101,8 +125,6 @@ void sensorReadSerial() {
   Serial.print(sensor3.readRangeContinuousMillimeters());
   Serial.print(',');
   Serial.print(sensor4.readRangeContinuousMillimeters());
-  Serial.print(',');
-  Serial.print(sensor5.readRangeContinuousMillimeters());
   Serial.println();
   
 //  // Uncomment to check for device addresses
