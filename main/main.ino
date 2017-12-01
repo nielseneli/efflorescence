@@ -18,6 +18,7 @@ VL53L0X sensor2;
 VL53L0X sensor3;
 VL53L0X sensor4;
 
+// Initialize servos
 Servo bloom0;
 Servo turn0;
 Servo bloom1;
@@ -25,43 +26,37 @@ Servo turn1;
 Servo bloom2;
 Servo turn2;
 
-//const int speaker = 3;
+// Servo edge values
+// Bloom edges
+int closed = 60;
+int opened = 0;
+// Turn edges
+int enter = 35;
+int leave = 85;
 
-int bloomPos = 60;
-int turnPos = 35;
+// Set temp bloomPos variables to beginning vals
+int bloomPos = closed;
+int turnPos = enter;
 
-int sensorVal = 0;
+// Initialize triggered-sensor-holding variable
+int triggedSensors;
 
-//// notes in the melody:
-//int melody[] = {
-//  NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
-//};
-//
-//// note durations: 4 = quarter note, 8 = eighth note, etc.:
-//int noteDurations[] = {
-//  4, 8, 8, 4, 4, 4, 4, 4
-//};
-
-void setup() {
-  sensorSetup();
-  
-  bloom0.attach(3);
-  turn0.attach(5);
-  bloom1.attach(6);
-  turn1.attach(9);
-  bloom2.attach(10);
-  turn2.attach(11);
-
-  bloom0.write(bloomPos);
-  turn0.write(turnPos);
-  bloom1.write(bloomPos);
-  turn1.write(turnPos);
-  bloom2.write(bloomPos);
-  turn2.write(turnPos);  
+/* Write a position to all bloom motors */
+void writeBlooms(int pos) {
+  bloom0.write(pos);
+  bloom1.write(pos);
+  bloom2.write(pos);
 }
 
-void loop() {
-  // Figure out which sensors are triggered
+/* Write a position to all turn motors */
+void writeTurns(int pos) {
+  turn0.write(pos);
+  turn1.write(pos);
+  turn2.write(pos);
+}
+
+/* Returns value indicating which sensors are activated */
+int whichSensors() {
   int whichSensors = 0;
 
   if (sensorTriggered(sensor0, 300, 700)) {
@@ -79,25 +74,44 @@ void loop() {
   if (sensorTriggered(sensor4, 300, 700)) {
      whichSensors += 16;
   }
+  return whichSensors;
+}
 
-  Serial.println(whichSensors);
+void setup() {
+  // Set unique IDs for the sensors
+  sensorsRename();
+  // Begin continuous read mode on sensors
+  sensorsBegin();
+
+  // Attach servos
+  bloom0.attach(3);
+  turn0.attach(5);
+  bloom1.attach(6);
+  turn1.attach(9);
+  bloom2.attach(10);
+  turn2.attach(11);
+
+  // Set servos to starting position
+  writeBlooms(bloomPos);
+  writeTurns(turnPos);  
+}
+
+void loop() {
+  // Check which sensors are triggered
+  triggedSensors = whichSensors();
 
   // Move based on which sensors are triggered
-  switch (whichSensors) {
+  switch (triggedSensors) {
     case 1:                           /* 0         */
       // Begin turning
       if (turnPos >= 35 && turnPos < 48) {
         turnPos += 5;
-        turn0.write(turnPos);
-        turn1.write(turnPos);
-        turn2.write(turnPos);
+        writeTurns(turnPos);
       }
       // Begin blooming
       if (bloomPos > 0) {
         bloomPos -= 5;
-        bloom0.write(bloomPos);
-        bloom1.write(bloomPos);
-        bloom2.write(bloomPos);
+        writeBlooms(bloomPos);
       }
       break;
     case 5:                           /* 0   2     */
@@ -105,16 +119,12 @@ void loop() {
       // Bloom
       if (bloomPos > 0) {
         bloomPos -= 5;
-        bloom0.write(bloomPos);
-        bloom1.write(bloomPos);
-        bloom2.write(bloomPos);
+        writeBlooms(bloomPos);
       }
       // Turn
       if (turnPos >= 35 && turnPos < 62) {
         turnPos += 5;
-        turn0.write(turnPos);
-        turn1.write(turnPos);
-        turn2.write(turnPos);
+        writeTurns(turnPos);
       }
       break;
     
@@ -123,16 +133,12 @@ void loop() {
     case 16:                          /*         4 */
       if (bloomPos < 60) {
         bloomPos += 5;
-        bloom0.write(bloomPos);
-        bloom1.write(bloomPos);
-        bloom2.write(bloomPos);
+        writeBlooms(bloomPos);
       }
       // Turn
       if (turnPos >= 35 && turnPos< 85) {
         turnPos += 5;
-        turn0.write(turnPos);
-        turn1.write(turnPos);
-        turn2.write(turnPos);
+        writeTurns(turnPos);
       }
       break;
       
@@ -144,17 +150,13 @@ void loop() {
       }
       // Reset turn motor if bloom is set
       while (turnPos > 35 && bloomPos == 60) {
-        turn0.write(turnPos);
-        turn1.write(turnPos);
-        turn2.write(turnPos);
+        writeTurns(turnPos);
         turnPos--;
         delay(20);
       }
       // Reset bloom motor if turn is set
       while (bloomPos < 60 && turnPos == 35) {
-        bloom0.write(bloomPos);
-        bloom1.write(bloomPos);
-        bloom2.write(bloomPos);
+        writeBlooms(bloomPos);
         bloomPos++;
         delay(20);
       }
@@ -162,20 +164,18 @@ void loop() {
       while (bloomPos < 60 && turnPos > 35) {
         bloomPos++;
         turnPos--;
-        bloom0.write(bloomPos);
-        bloom1.write(bloomPos);
-        bloom2.write(bloomPos);
-        turn0.write(turnPos);
-        turn1.write(turnPos);
-        turn2.write(turnPos);
+        writeBlooms(bloomPos);
+        writeTurns(turnPos);
         delay(20);
       }
   }
-  Serial.print(whichSensors);
-  Serial.print(',');
-  Serial.print(bloomPos);
-  Serial.print(',');
-  Serial.println(turnPos);
+
+  // Uncomment to simplify debugging
+//  Serial.print(triggedSensors);
+//  Serial.print(',');
+//  Serial.print(bloomPos);
+//  Serial.print(',');
+//  Serial.println(turnPos);
   delay(100);
 
 }

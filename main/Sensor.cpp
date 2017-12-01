@@ -11,7 +11,8 @@ extern VL53L0X sensor2;
 extern VL53L0X sensor3;
 extern VL53L0X sensor4;
 
-void sensorSetup() {
+/* Assign 5 sensors unique IDs */
+void sensorsRename() {
   // Initialize shutdown pins
   const int SHDN0 = 4;
   const int SHDN1 = 12;
@@ -72,7 +73,10 @@ void sensorSetup() {
   sensor4.init(true);
   delay(100);
   sensor4.setAddress((uint8_t)25);
+}
 
+/* Begin continuous read mode on sensors */
+void sensorsBegin() {
   sensor0.startContinuous();
   sensor1.startContinuous();
   sensor2.startContinuous();
@@ -80,10 +84,12 @@ void sensorSetup() {
   sensor4.startContinuous();
 }
 
+/* Print an individual sensor value to Serial */
 void sensorReadInd(VL53L0X &sensor) {
   Serial.println(sensor.readRangeContinuousMillimeters());
 }
 
+/* return 1 if an individual sensor reads within given range */
 int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge) {
   if (sensor.readRangeContinuousMillimeters() > minEdge && sensor.readRangeContinuousMillimeters() < maxEdge) {
     return 1; 
@@ -93,6 +99,7 @@ int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge) {
   }
 }
 
+/* Print all 5 sensor values to Serial */
 void sensorReadSerial() {
   Serial.print(sensor0.readRangeContinuousMillimeters());
   Serial.print(',');

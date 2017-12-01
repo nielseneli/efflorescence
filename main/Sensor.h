@@ -8,7 +8,8 @@
 #include <Wire.h>
 #include <VL53L0X.h>
 
-void sensorSetup();
+void sensorsRename();
+void sensorsBegin();
 void sensorReadInd(VL53L0X &sensor);
 int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge);
 void sensorReadSerial();
