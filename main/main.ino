@@ -18,23 +18,6 @@ VL53L0X sensor2;
 VL53L0X sensor3;
 VL53L0X sensor4;
 
-VL53L0X sensors[] = {
-  sensor0, sensor1, sensor2, sensor3, sensor4
-};
-
-// Initialize sensor value holder array
-int sensorVals[] = {
-  0, 0, 0, 0, 0
-};
-
-// Initialize bounds arrays
-int minVals[] = {
-  400, 400, 400, 400, 400
-};
-int maxVals[] = {
-  600, 600, 600, 600, 600
-};
-
 Servo bloom0;
 Servo turn0;
 Servo bloom1;

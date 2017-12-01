@@ -11,10 +11,6 @@ extern VL53L0X sensor2;
 extern VL53L0X sensor3;
 extern VL53L0X sensor4;
 
-extern int sensorVals[];
-extern int minVals[];
-extern int maxVals[];
-
 void sensorSetup() {
   // Initialize shutdown pins
   const int SHDN0 = 4;
