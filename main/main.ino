@@ -84,46 +84,98 @@ void loop() {
 
   // Move based on which sensors are triggered
   switch (whichSensors) {
-    // Sensors 0 or 2 or 0,2 are triggered
-    case 1:
-    case 4:
-    case 5:
-      if (bloomPos <= 0) {
-        break;
+    case 1:                           /* 0         */
+      // Begin turning
+      if (turnPos >= 35 && turnPos < 69) {
+        turnPos += 5;
+        turn0.write(turnPos);
+        turn1.write(turnPos);
+        turn2.write(turnPos);
       }
-      bloomPos -= 5;
-      bloom0.write(bloomPos);
-      bloom1.write(bloomPos);
-      bloom2.write(bloomPos);
+      // Begin blooming
+      if (bloomPos > 0) {
+        bloomPos -= 5;
+        bloom0.write(bloomPos);
+        bloom1.write(bloomPos);
+        bloom2.write(bloomPos);
+      }
       break;
-
+    case 5:                           /* 0   2     */
+    case 4:                           /*     2     */
+      // Bloom
+      if (bloomPos > 0) {
+        bloomPos -= 5;
+        bloom0.write(bloomPos);
+        bloom1.write(bloomPos);
+        bloom2.write(bloomPos);
+      }
+      // Turn
+      if (turnPos >= 35 && turnPos < 101) {
+        turnPos += 5;
+        turn0.write(turnPos);
+        turn1.write(turnPos);
+        turn2.write(turnPos);
+      }
+      break;
+    
     // Sensors 4 or 2,4 or 0,2,4 are triggered
-    case 16:
-    case 20:
-    case 21:
-      if (bloomPos >= 80) {
-        break;
+    case 20:                          /*     2   4 */
+    case 16:                          /*         4 */
+      if (bloomPos < 80) {
+        bloomPos += 5;
+        bloom0.write(bloomPos);
+        bloom1.write(bloomPos);
+        bloom2.write(bloomPos);
       }
-      bloomPos += 5;
-      bloom0.write(bloomPos);
-      bloom1.write(bloomPos);
-      bloom2.write(bloomPos);
+      // Turn
+      if (turnPos >= 35 && turnPos< 135) {
+        turnPos += 5;
+        turn0.write(turnPos);
+        turn1.write(turnPos);
+        turn2.write(turnPos);
+      }
       break;
-
+      
     // No sensors triggered
-    case 0:
-      if (bloomPos == 80) {
+    case 0:                          /*           */
+      // Do nothing if they're both set already
+      if (bloomPos == 80 && turnPos == 135) {
         break;
       }
-      while (bloomPos < 81) {
+      // Reset turn motor if bloom is set
+      while (turnPos < 136 && bloomPos == 80) {
+        turn0.write(turnPos);
+        turn1.write(turnPos);
+        turn2.write(turnPos);
+        turnPos++;
+        delay(20);
+      }
+      // Reset bloom motor if turn is set
+      while (bloomPos < 81 && turnPos == 135) {
         bloom0.write(bloomPos);
         bloom1.write(bloomPos);
         bloom2.write(bloomPos);
         bloomPos++;
         delay(20);
-        Serial.println(bloomPos);
+        Serial.print(bloomPos);
+        Serial.print(',');
+        Serial.println(turnPos);
       }
-      break;
+      // Turn them both if neither are set
+      while (bloomPos < 81 && turnPos < 136) {
+        bloom0.write(bloomPos);
+        bloom1.write(bloomPos);
+        bloom2.write(bloomPos);
+        turn0.write(turnPos);
+        turn1.write(turnPos);
+        turn2.write(turnPos);
+        bloomPos++;
+        turnPos++;
+        delay(20);
+        Serial.print(bloomPos);
+        Serial.print(',');
+        Serial.println(turnPos);
+      }
   }
   delay(10);
 
