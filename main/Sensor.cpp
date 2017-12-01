@@ -97,24 +97,6 @@ int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge) {
   }
 }
 
-//void whichSensorTriggered(VL53L0X &sensor0, VL53L0X &sensor1, VL53L0X &sensor2, VL53L0X &sensor3, VL53L0X &sensor4, int sensorVals[], int minVals[], int maxVals[]) {
-//  if (sensorTriggered(sensor0, minVals[0], maxVals[0])) {
-//    sensorVals[0] = 1;
-//  }
-//  if (sensorTriggered(sensor1, minVals[1], maxVals[1])) {
-//    sensorVals[1] = 1;
-//  }
-//  if (sensorTriggered(sensor2, minVals[2], maxVals[2])) {
-//    sensorVals[2] = 1;
-//  }
-//  if (sensorTriggered(sensor3, minVals[3], maxVals[3])) {
-//    sensorVals[3] = 1;
-//  }
-//  if (sensorTriggered(sensor4, minVals[4], maxVals[4])) {
-//    sensorVals[4] = 1;
-//  }
-//}
-
 void sensorReadSerial() {
   Serial.print(sensor0.readRangeContinuousMillimeters());
   Serial.print(',');
@@ -126,31 +108,4 @@ void sensorReadSerial() {
   Serial.print(',');
   Serial.print(sensor4.readRangeContinuousMillimeters());
   Serial.println();
-  
-//  // Uncomment to check for device addresses
-//  Serial.println ("I2C scanner. Scanning ...");
-//  byte count = 0;
-//
-//
-//  for (byte i = 1; i < 120; i++)
-//  {
-//
-//    Wire.beginTransmission (i);
-//    if (Wire.endTransmission () == 0)
-//    {
-//      Serial.print ("Found address: ");
-//      Serial.print (i, DEC);
-//      Serial.print (" (0x");
-//      Serial.print (i, HEX);
-//      Serial.println (")");
-//      count++;
-//      delay (1);
-//    } // end of good response
-//  } // end of for loop
-//  Serial.println ("Done.");
-//  Serial.print ("Found ");
-//  Serial.print (count, DEC);
-//  Serial.println (" device(s).");
-//
-//  delay(3000);
 }
