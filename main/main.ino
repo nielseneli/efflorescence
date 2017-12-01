@@ -27,7 +27,7 @@ Servo turn2;
 
 //const int speaker = 3;
 
-int bloomPos = 80;
+int bloomPos = 60;
 int turnPos = 35;
 
 int sensorVal = 0;
@@ -64,19 +64,19 @@ void loop() {
   // Figure out which sensors are triggered
   int whichSensors = 0;
 
-  if (sensorTriggered(sensor0, 400, 600)) {
+  if (sensorTriggered(sensor0, 300, 700)) {
      whichSensors += 1;
   }
   if (sensorTriggered(sensor1, 400, 600)) {
      whichSensors += 2;
   }
-  if (sensorTriggered(sensor2, 400, 600)) {
+  if (sensorTriggered(sensor2, 300, 450)) {
      whichSensors += 4;
   }
   if (sensorTriggered(sensor3, 400, 600)) {
      whichSensors += 8;
   }
-  if (sensorTriggered(sensor4, 400, 600)) {
+  if (sensorTriggered(sensor4, 300, 700)) {
      whichSensors += 16;
   }
 
@@ -86,7 +86,7 @@ void loop() {
   switch (whichSensors) {
     case 1:                           /* 0         */
       // Begin turning
-      if (turnPos >= 35 && turnPos < 69) {
+      if (turnPos >= 35 && turnPos < 48) {
         turnPos += 5;
         turn0.write(turnPos);
         turn1.write(turnPos);
@@ -110,7 +110,7 @@ void loop() {
         bloom2.write(bloomPos);
       }
       // Turn
-      if (turnPos >= 35 && turnPos < 101) {
+      if (turnPos >= 35 && turnPos < 62) {
         turnPos += 5;
         turn0.write(turnPos);
         turn1.write(turnPos);
@@ -121,14 +121,14 @@ void loop() {
     // Sensors 4 or 2,4 or 0,2,4 are triggered
     case 20:                          /*     2   4 */
     case 16:                          /*         4 */
-      if (bloomPos < 80) {
+      if (bloomPos < 60) {
         bloomPos += 5;
         bloom0.write(bloomPos);
         bloom1.write(bloomPos);
         bloom2.write(bloomPos);
       }
       // Turn
-      if (turnPos >= 35 && turnPos< 135) {
+      if (turnPos >= 35 && turnPos< 85) {
         turnPos += 5;
         turn0.write(turnPos);
         turn1.write(turnPos);
@@ -139,45 +139,44 @@ void loop() {
     // No sensors triggered
     case 0:                          /*           */
       // Do nothing if they're both set already
-      if (bloomPos == 80 && turnPos == 135) {
+      if (bloomPos == 60 && turnPos == 35) {
         break;
       }
       // Reset turn motor if bloom is set
-      while (turnPos < 136 && bloomPos == 80) {
+      while (turnPos > 35 && bloomPos == 60) {
         turn0.write(turnPos);
         turn1.write(turnPos);
         turn2.write(turnPos);
-        turnPos++;
+        turnPos--;
         delay(20);
       }
       // Reset bloom motor if turn is set
-      while (bloomPos < 81 && turnPos == 135) {
+      while (bloomPos < 60 && turnPos == 35) {
         bloom0.write(bloomPos);
         bloom1.write(bloomPos);
         bloom2.write(bloomPos);
         bloomPos++;
         delay(20);
-        Serial.print(bloomPos);
-        Serial.print(',');
-        Serial.println(turnPos);
       }
       // Turn them both if neither are set
-      while (bloomPos < 81 && turnPos < 136) {
+      while (bloomPos < 60 && turnPos > 35) {
+        bloomPos++;
+        turnPos--;
         bloom0.write(bloomPos);
         bloom1.write(bloomPos);
         bloom2.write(bloomPos);
         turn0.write(turnPos);
         turn1.write(turnPos);
         turn2.write(turnPos);
-        bloomPos++;
-        turnPos++;
         delay(20);
-        Serial.print(bloomPos);
-        Serial.print(',');
-        Serial.println(turnPos);
       }
   }
-  delay(10);
+  Serial.print(whichSensors);
+  Serial.print(',');
+  Serial.print(bloomPos);
+  Serial.print(',');
+  Serial.println(turnPos);
+  delay(100);
 
 }
 
