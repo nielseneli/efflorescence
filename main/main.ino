@@ -106,8 +106,8 @@ void loop() {
   switch (whichSensors) {
     // Sensor 0 is triggered
     case 1:
-    case 2:
-    case 3:
+    case 4:
+    case 5:
       if (bloomPos <= 0) {
         break;
       }
