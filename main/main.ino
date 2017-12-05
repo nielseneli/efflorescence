@@ -111,71 +111,83 @@ void loop() {
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
-      // Begin turning
-      if (turnPos >= 35 && turnPos < 48) {
-        turnPos += 5;
-        writeTurns(turnPos);
-      }
-      // Begin blooming
-      if (bloomPos > 0) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
-      }
-      break;
-    case 5:                           /* 0   2     */
+    case 3:                           /* 0 1       */
+    case 7:                           /* 0 1 2     */
+    case 2:                           /*   1       */
+    case 6:                           /*   1 2     */
+    case 14:                          /*   1 2 3   */
     case 4:                           /*     2     */
-      // Bloom
-      if (bloomPos > 0) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
-      }
-      // Turn
-      if (turnPos >= 35 && turnPos < 62) {
-        turnPos += 5;
-        writeTurns(turnPos);
-      }
-      break;
-
-    // Sensors 4 or 2,4 or 0,2,4 are triggered
-    case 20:                          /*     2   4 */
+    case 12:                          /*     2 3   */
+    case 28:                          /*     2 3 4 */
+    case 8:                           /*       3   */
+    case 24:                          /*       3 4 */
     case 16:                          /*         4 */
-      if (bloomPos < 60) {
-        bloomPos += 5;
-        writeBlooms(bloomPos);
-      }
-      // Turn
-      if (turnPos >= 35 && turnPos < 85) {
-        turnPos += 5;
-        writeTurns(turnPos);
-      }
-      break;
-
-    // No sensors triggered
-    case 0:                          /*           */
-      // Do nothing if they're both set already
-      if (bloomPos == 60 && turnPos == 35) {
-        break;
-      }
-      // Reset turn motor if bloom is set
-      while (turnPos > 35 && bloomPos == 60) {
-        writeTurns(turnPos);
-        turnPos--;
-        delay(20);
-      }
-      // Reset bloom motor if turn is set
-      while (bloomPos < 60 && turnPos == 35) {
-        writeBlooms(bloomPos);
-        bloomPos++;
-        delay(20);
-      }
-      // Turn them both if neither are set
-      while (bloomPos < 60 && turnPos > 35) {
-        bloomPos++;
-        turnPos--;
-        writeBlooms(bloomPos);
-        writeTurns(turnPos);
-        delay(20);
-      }
+    
+//      // Begin turning
+//      if (turnPos >= 35 && turnPos < 48) {
+//        turnPos += 5;
+//        writeTurns(turnPos);
+//      }
+//      // Begin blooming
+//      if (bloomPos > 0) {
+//        bloomPos -= 5;
+//        writeBlooms(bloomPos);
+//      }
+//      break;
+//    case 5:                           /* 0   2     */
+//    case 4:                           /*     2     */
+//      // Bloom
+//      if (bloomPos > 0) {
+//        bloomPos -= 5;
+//        writeBlooms(bloomPos);
+//      }
+//      // Turn
+//      if (turnPos >= 35 && turnPos < 62) {
+//        turnPos += 5;
+//        writeTurns(turnPos);
+//      }
+//      break;
+//
+//    // Sensors 4 or 2,4 or 0,2,4 are triggered
+//    case 20:                          /*     2   4 */
+//    case 16:                          /*         4 */
+//      if (bloomPos < 60) {
+//        bloomPos += 5;
+//        writeBlooms(bloomPos);
+//      }
+//      // Turn
+//      if (turnPos >= 35 && turnPos < 85) {
+//        turnPos += 5;
+//        writeTurns(turnPos);
+//      }
+//      break;
+//
+//    // No sensors triggered
+//    case 0:                          /*           */
+//      // Do nothing if they're both set already
+//      if (bloomPos == 60 && turnPos == 35) {
+//        break;
+//      }
+//      // Reset turn motor if bloom is set
+//      while (turnPos > 35 && bloomPos == 60) {
+//        writeTurns(turnPos);
+//        turnPos--;
+//        delay(20);
+//      }
+//      // Reset bloom motor if turn is set
+//      while (bloomPos < 60 && turnPos == 35) {
+//        writeBlooms(bloomPos);
+//        bloomPos++;
+//        delay(20);
+//      }
+//      // Turn them both if neither are set
+//      while (bloomPos < 60 && turnPos > 35) {
+//        bloomPos++;
+//        turnPos--;
+//        writeBlooms(bloomPos);
+//        writeTurns(turnPos);
+//        delay(20);
+//      }
   }
 
   // Uncomment to simplify debugging
