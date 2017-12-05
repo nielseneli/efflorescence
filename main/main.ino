@@ -25,6 +25,8 @@ Servo bloom1;
 Servo turn1;
 Servo bloom2;
 Servo turn2;
+Servo bloom3;
+Servo turn3;
 
 // Servo edge values
 // Bloom edges
@@ -46,6 +48,7 @@ void writeBlooms(int pos) {
   bloom0.write(pos);
   bloom1.write(pos);
   bloom2.write(pos);
+  bloom3.write(pos);
 }
 
 /* Write a position to all turn motors */
@@ -53,6 +56,7 @@ void writeTurns(int pos) {
   turn0.write(pos);
   turn1.write(pos);
   turn2.write(pos);
+  turn3.write(pos);
 }
 
 /* Returns value indicating which sensors are activated */
@@ -84,12 +88,14 @@ void setup() {
   sensorsBegin();
 
   // Attach servos
-  bloom0.attach(3);
-  turn0.attach(5);
-  bloom1.attach(6);
-  turn1.attach(9);
-  bloom2.attach(10);
-  turn2.attach(11);
+  bloom0.attach(2);
+  turn0.attach(3);
+  bloom1.attach(10);
+  turn1.attach(11);
+  bloom2.attach(4);
+  turn2.attach(5);
+  bloom3.attach(12);
+  turn3.attach(13);
 
   // Set servos to starting position
   writeBlooms(bloomPos);
