@@ -64,19 +64,19 @@ int whichSensors() {
   int whichSensors = 0;
 
   if (sensorTriggered(sensor0, 300, 700)) {
-     whichSensors += 1;
+    whichSensors += 1;
   }
   if (sensorTriggered(sensor1, 400, 600)) {
-     whichSensors += 2;
+    whichSensors += 2;
   }
   if (sensorTriggered(sensor2, 300, 450)) {
-     whichSensors += 4;
+    whichSensors += 4;
   }
   if (sensorTriggered(sensor3, 400, 600)) {
-     whichSensors += 8;
+    whichSensors += 8;
   }
   if (sensorTriggered(sensor4, 300, 700)) {
-     whichSensors += 16;
+    whichSensors += 16;
   }
   return whichSensors;
 }
@@ -99,10 +99,12 @@ void setup() {
 
   // Set servos to starting position
   writeBlooms(bloomPos);
-  writeTurns(turnPos);  
+  writeTurns(turnPos);
 }
 
 void loop() {
+  // test the sensors
+  sensorReadSerial();
   // Check which sensors are triggered
   triggedSensors = whichSensors();
 
@@ -133,7 +135,7 @@ void loop() {
         writeTurns(turnPos);
       }
       break;
-    
+
     // Sensors 4 or 2,4 or 0,2,4 are triggered
     case 20:                          /*     2   4 */
     case 16:                          /*         4 */
@@ -142,12 +144,12 @@ void loop() {
         writeBlooms(bloomPos);
       }
       // Turn
-      if (turnPos >= 35 && turnPos< 85) {
+      if (turnPos >= 35 && turnPos < 85) {
         turnPos += 5;
         writeTurns(turnPos);
       }
       break;
-      
+
     // No sensors triggered
     case 0:                          /*           */
       // Do nothing if they're both set already
@@ -177,11 +179,11 @@ void loop() {
   }
 
   // Uncomment to simplify debugging
-//  Serial.print(triggedSensors);
-//  Serial.print(',');
-//  Serial.print(bloomPos);
-//  Serial.print(',');
-//  Serial.println(turnPos);
+  //  Serial.print(triggedSensors);
+  //  Serial.print(',');
+  //  Serial.print(bloomPos);
+  //  Serial.print(',');
+  //  Serial.println(turnPos);
   delay(100);
 
 }
