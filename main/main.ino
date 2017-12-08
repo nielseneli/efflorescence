@@ -48,10 +48,35 @@ void writeBlooms(int pos) {
   bloomRight.write(pos);
 }
 
+
+/* Functions to open and close the flowers */
+void openBlooms(int &bloomPos) {
+  bloomPos -= 5;
+  bloomLeft.write(bloomPos);
+  bloomRight.write(bloomPos);
+}
+void closeBlooms(int &bloomPos) {
+  bloomPos += 5;
+  bloomLeft.write(bloomPos);
+  bloomRight.write(bloomPos);
+}
+
 /* Write a position to all turn motors */
 void writeTurns(int pos) {
   turnLeft.write(pos);
   turnRight.write(pos);
+}
+
+/* Functions to turn and return the flowers */
+void turn(int &turnPos) {
+  turnPos += 5;
+  turnLeft.write(turnPos);
+  turnRight.write(120-turnPos);
+}
+void reTurn(int &turnPos) {
+  turnPos -= 5;
+  turnLeft.write(turnPos);
+  turnRight.write(120-turnPos);
 }
 
 /* Returns value indicating which sensors are activated */
@@ -106,73 +131,61 @@ void loop() {
     case 3:                           /* 0 1       */
       // Begin turning
       if (turnPos >= enter && turnPos < enter + turnDiff/5) {
-        turnPos += 5;
-        writeTurns(turnPos);
+        turn(turnPos);
       }
       // Begin blooming
       if (bloomPos > opened) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
+        openBlooms(bloomPos);
       }
     case 7:                           /* 0 1 2     */
     case 2:                           /*   1       */
       // Turn some more
       if (turnPos >= enter && turnPos < enter + turnDiff/3) {
-        turnPos += 5;
-        writeTurns(turnPos);
+        turn(turnPos);
       }
       // Bloom some more
       if (bloomPos > opened) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
+        openBlooms(bloomPos);
       }
     case 6:                           /*   1 2     */
       // Keep on turning
       if (turnPos >= enter && turnPos < leave - turnDiff/3) {
-        turnPos += 5;
-        writeTurns(turnPos);
+        turn(turnPos);
       }
       // This is about when we want it to be fully bloomed
       if (bloomPos > opened) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
+        openBlooms(bloomPos);
       }
     case 14:                          /*   1 2 3   */
     case 4:                           /*     2     */
     case 12:                          /*     2 3   */
       // Keep on turning
       if (turnPos >= enter && turnPos < leave - turnDiff/5) {
-        turnPos += 5;
-        writeTurns(turnPos);
+        turn(turnPos);
       }
       // Start unblooming
       if (bloomPos < closed) {
-        bloomPos += 5;
-        writeBlooms(bloomPos);
+        closeBlooms(bloomPos);
       }
     case 28:                          /*     2 3 4 */
     case 8:                           /*       3   */
       // Keep on turning
       if (turnPos >= enter && turnPos < leave - turnDiff/5) {
-        turnPos += 5;
-        writeTurns(turnPos);
+        turn(turnPos);
       }
       // Keep unblooming
       if (bloomPos < closed) {
-        bloomPos += 5;
-        writeBlooms(bloomPos);
+        closeBlooms(bloomPos);
       }
     case 24:                          /*       3 4 */
     case 16:                          /*         4 */
       // Keep on turning
       if (turnPos >= enter && turnPos < leave) {
-        turnPos += 5;
-        writeTurns(turnPos);
+        turn(turnPos);
       }
       // Start unblooming
       if (bloomPos < closed) {
-        bloomPos += 5;
-        writeBlooms(bloomPos);
+        closeBlooms(bloomPos);
       }
     case 0:                          /*           */
       // Do nothing if they're both set already
@@ -181,22 +194,18 @@ void loop() {
       }
       // Reset turn motor if bloom is set
       while (turnPos > 35 && bloomPos == 60) {
-        writeTurns(turnPos);
-        turnPos--;
+        reTurn(turnPos);
         delay(20);
       }
       // Reset bloom motor if turn is set
       while (bloomPos < 60 && turnPos == 35) {
-        writeBlooms(bloomPos);
-        bloomPos++;
+        closeBlooms(bloomPos);
         delay(20);
       }
       // Turn them both if neither are set
       while (bloomPos < 60 && turnPos > 35) {
-        bloomPos++;
-        turnPos--;
-        writeBlooms(bloomPos);
-        writeTurns(turnPos);
+        closeBlooms(bloomPos);
+        reTurn(turnPos);
         delay(20);
       }
   }
