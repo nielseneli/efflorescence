@@ -14,11 +14,11 @@ extern VL53L0X sensor4;
 /* Assign 5 sensors unique IDs */
 void sensorsRename() {
   // Initialize shutdown pins
-  const int SHDN0 = 21;
-  const int SHDN1 = 22;
-  const int SHDN2 = 25;
-  const int SHDN3 = 26;
-  const int SHDN4 = 29;
+  const int SHDN0 = 4;
+  const int SHDN1 = 12;
+  const int SHDN2 = 7;
+  const int SHDN3 = 13;
+  const int SHDN4 = 8;
 
   // Set shutdown pins to output mode
   pinMode(SHDN0, OUTPUT);
