@@ -42,13 +42,6 @@ int turnPos = enter;
 // Initialize triggered-sensor-holding variable
 int triggedSensors;
 
-/* Write a position to all bloom motors */
-void writeBlooms(int pos) {
-  bloomLeft.write(pos);
-  bloomRight.write(pos);
-}
-
-
 /* Functions to open and close the flowers */
 void openBlooms(int &bloomPos) {
   bloomPos -= 5;
@@ -59,12 +52,6 @@ void closeBlooms(int &bloomPos) {
   bloomPos += 5;
   bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
-}
-
-/* Write a position to all turn motors */
-void writeTurns(int pos) {
-  turnLeft.write(pos);
-  turnRight.write(pos);
 }
 
 /* Functions to turn and return the flowers */
@@ -114,16 +101,18 @@ void setup() {
   turnRight.attach(9);
 
   // Set servos to starting position
-  writeBlooms(bloomPos);
-  writeTurns(turnPos);
+  bloomLeft.write(bloomPos);
+  turnLeft.write(turnPos);
+  bloomRight.write(bloomPos);
+  turnRight.write(turnPos);
 }
 
 void loop() {
   // test the sensors
-//  sensorReadSerial();
+  sensorReadSerial();
   // Check which sensors are triggered
   triggedSensors = whichSensors();
-  Serial.println(triggedSensors);
+//  Serial.println(triggedSensors);
 
   // Move based on which sensors are triggered
   switch (triggedSensors) {
