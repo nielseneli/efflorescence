@@ -19,7 +19,6 @@ VL53L0X sensor3;
 VL53L0X sensor4;
 
 // Initialize servos
-
 Servo bloomLeft;
 Servo turnLeft;
 Servo bloomRight;
@@ -32,8 +31,12 @@ int opened = 0;
 int bloomDiff = 60;
 // Turn edges
 int enter = 35;
-int leave = 85;
+int leave = 105;
 int turnDiff = 50;
+
+// millis
+unsigned long prevMillis = 0;
+const int checkDelay = 100;
 
 // Set temp bloomPos variables to beginning vals
 int bloomPos = closed;
@@ -44,25 +47,25 @@ int triggedSensors;
 
 /* Functions to open and close the flowers */
 void openBlooms(int &bloomPos) {
-  bloomPos -= 5;
-  bloomLeft.write(bloomPos);
+  bloomPos -= 15;
+//  bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
 }
 void closeBlooms(int &bloomPos) {
-  bloomPos += 5;
-  bloomLeft.write(bloomPos);
+  bloomPos += 15;
+//  bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
 }
 
 /* Functions to turn and return the flowers */
 void turn(int &turnPos) {
-  turnPos += 5;
-  turnLeft.write(turnPos);
+  turnPos += 10;
+//  turnLeft.write(turnPos);
   turnRight.write(120-turnPos);
 }
 void reTurn(int &turnPos) {
-  turnPos -= 5;
-  turnLeft.write(turnPos);
+  turnPos -= 10;
+//  turnLeft.write(turnPos);
   turnRight.write(120-turnPos);
 }
 
@@ -76,7 +79,7 @@ int whichSensors() {
   if (sensorTriggered(sensor1, 250, 550)) {
     whichSensors += 2;
   }
-  if (sensorTriggered(sensor2, 200, 700)) {
+  if (sensorTriggered(sensor2, 150, 700)) {
     whichSensors += 4;
   }
   if (sensorTriggered(sensor3, 150, 600)) {
@@ -95,77 +98,84 @@ void setup() {
   sensorsBegin();
 
   // Attach servos
-  bloomLeft.attach(3);
-  turnLeft.attach(5);
-  bloomRight.attach(6);
-  turnRight.attach(9);
+//  bloomLeft.attach(5);
+//  turnLeft.attach(6);
+  bloomRight.attach(10);
+  turnRight.attach(11);
 
   // Set servos to starting position
-  bloomLeft.write(bloomPos);
-  turnLeft.write(turnPos);
+//  bloomLeft.write(bloomPos);
+//  turnLeft.write(turnPos);
   bloomRight.write(bloomPos);
   turnRight.write(turnPos);
 }
 
 void loop() {
   // test the sensors
-  sensorReadSerial();
+//  sensorReadSerial();
   // Check which sensors are triggered
   triggedSensors = whichSensors();
-//  Serial.println(triggedSensors);
+  Serial.print(triggedSensors);
+  Serial.print(",");
+  sensorReadSerial();
 
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
     case 3:                           /* 0 1       */
       // Begin turning
-      if (turnPos >= enter && turnPos < enter + turnDiff/5) {
+      if (turnPos >= enter && turnPos < enter + turnDiff) {
         turn(turnPos);
       }
       // Begin blooming
       if (bloomPos > opened) {
         openBlooms(bloomPos);
       }
+      break;
     case 7:                           /* 0 1 2     */
     case 2:                           /*   1       */
       // Turn some more
-      if (turnPos >= enter && turnPos < enter + turnDiff/3) {
+      if (turnPos >= enter && turnPos < enter + turnDiff) {
         turn(turnPos);
       }
       // Bloom some more
       if (bloomPos > opened) {
         openBlooms(bloomPos);
       }
+      break;
     case 6:                           /*   1 2     */
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave - turnDiff/3) {
+      if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
       // This is about when we want it to be fully bloomed
       if (bloomPos > opened) {
         openBlooms(bloomPos);
       }
+      break;
     case 14:                          /*   1 2 3   */
     case 4:                           /*     2     */
     case 12:                          /*     2 3   */
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave - turnDiff/5) {
+      if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
       // Start unblooming
       if (bloomPos < closed) {
-        closeBlooms(bloomPos);
+        openBlooms(bloomPos);
       }
+      break;
     case 28:                          /*     2 3 4 */
     case 8:                           /*       3   */
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave - turnDiff/5) {
+      if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
       // Keep unblooming
       if (bloomPos < closed) {
         closeBlooms(bloomPos);
       }
+      break;
     case 24:                          /*       3 4 */
     case 16:                          /*         4 */
       // Keep on turning
@@ -176,7 +186,12 @@ void loop() {
       if (bloomPos < closed) {
         closeBlooms(bloomPos);
       }
+      break;
     case 0:                          /*           */
+      // check millis
+      if (millis() - prevMillis <= checkDelay) {
+        break;
+      }
       // Do nothing if they're both set already
       if (bloomPos == 60 && turnPos == 35) {
         break;
@@ -184,18 +199,18 @@ void loop() {
       // Reset turn motor if bloom is set
       while (turnPos > 35 && bloomPos == 60) {
         reTurn(turnPos);
-        delay(20);
+        delay(30);
       }
       // Reset bloom motor if turn is set
       while (bloomPos < 60 && turnPos == 35) {
         closeBlooms(bloomPos);
-        delay(20);
+        delay(30);
       }
       // Turn them both if neither are set
       while (bloomPos < 60 && turnPos > 35) {
         closeBlooms(bloomPos);
         reTurn(turnPos);
-        delay(20);
+        delay(30);
       }
   }
 
@@ -205,7 +220,7 @@ void loop() {
   //  Serial.print(bloomPos);
   //  Serial.print(',');
   //  Serial.println(turnPos);
-  delay(100);
+  delay(20);
 
 }
 
