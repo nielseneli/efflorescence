@@ -26,13 +26,13 @@ Servo turnRight;
 
 // Servo edge values
 // Bloom edges
-int closed = 60;
-int opened = 0;
-int bloomDiff = 60;
+const int closed = 60;
+const int opened = 0;
+const int bloomDiff = 60;
 // Turn edges
-int enter = 35;
-int leave = 105;
-int turnDiff = 50;
+const int enter = 35;
+const int leave = 105;
+const int turnDiff = 50;
 
 // millis
 unsigned long prevMillis = 0;
@@ -47,26 +47,28 @@ int triggedSensors;
 
 /* Functions to open and close the flowers */
 void openBlooms(int &bloomPos) {
-  bloomPos -= 15;
+  bloomPos -= 10;
 //  bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
 }
 void closeBlooms(int &bloomPos) {
-  bloomPos += 15;
+  bloomPos += 10;
 //  bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
 }
 
 /* Functions to turn and return the flowers */
 void turn(int &turnPos) {
-  turnPos += 6;
+  turnPos += 10;
 //  turnLeft.write(turnPos);
   turnRight.write(120-turnPos);
+  delay(10);
 }
 void reTurn(int &turnPos) {
-  turnPos -= 6;
+  turnPos -= 10;
 //  turnLeft.write(turnPos);
   turnRight.write(120-turnPos);
+  delay(10);
 }
 
 /* Returns value indicating which sensors are activated */
@@ -107,7 +109,7 @@ void setup() {
 //  bloomLeft.write(bloomPos);
 //  turnLeft.write(turnPos);
   bloomRight.write(bloomPos);
-  turnRight.write(turnPos-turnDiff);
+  turnRight.write(120-turnPos);
 }
 
 void loop() {
@@ -125,7 +127,7 @@ void loop() {
     case 3:                           /* 0 1       */
       prevMillis = millis();
       // Begin turning
-      if (turnPos >= enter && turnPos < enter + turnDiff) {
+      if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
       // Begin blooming
@@ -137,7 +139,7 @@ void loop() {
     case 2:                           /*   1       */
       prevMillis = millis();
       // Turn some more
-      if (turnPos >= enter && turnPos < enter + turnDiff) {
+      if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
       // Bloom some more
@@ -228,7 +230,6 @@ void loop() {
   //  Serial.print(bloomPos);
   //  Serial.print(',');
   //  Serial.println(turnPos);
-  delay(10);
 
 }
 
