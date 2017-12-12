@@ -1,5 +1,5 @@
 /*
- * Sensor.c - Use 5 VL53L0X sensors
+ * Sensor.cpp - Use 5 VL53L0X sensors
  */
  
 #include "Sensor.h"
@@ -97,6 +97,28 @@ int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge) {
   else {
     return 0;
   }
+}
+
+/* returns int with unique value for each sensor activated */
+int whichSensors() {
+  int whichSensors = 0;
+  
+  if (sensorTriggered(sensor0, 250, 900)) {
+    whichSensors += 1;
+  }
+  if (sensorTriggered(sensor1, 250, 900)) {
+    whichSensors += 2;
+  }
+  if (sensorTriggered(sensor2, 150, 900)) {
+    whichSensors += 4;
+  }
+  if (sensorTriggered(sensor3, 300, 1000)) {
+    whichSensors += 8;
+  }
+  if (sensorTriggered(sensor4, 250, 1000)) {
+    whichSensors += 16;
+  }
+  return whichSensors;
 }
 
 /* Print all 5 sensor values to Serial */

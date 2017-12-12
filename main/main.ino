@@ -10,6 +10,7 @@
 #include "pitches.h"
 #include "Sensor.h"
 #include <VL53L0X.h>
+#include "Servos.h"
 
 // Initialize VL53L0X sensors
 VL53L0X sensor0;
@@ -32,7 +33,7 @@ const int bloomDiff = 60;
 // Turn edges
 const int enter = 35;
 const int leave = 105;
-const int turnDiff = 50;
+const int turnDiff = 70;
 
 // millis
 unsigned long prevMillis = 0;
@@ -44,54 +45,6 @@ int turnPos = enter;
 
 // Initialize triggered-sensor-holding variable
 int triggedSensors;
-
-/* Functions to open and close the flowers */
-void openBlooms(int &bloomPos) {
-  bloomPos -= 10;
-//  bloomLeft.write(bloomPos);
-  bloomRight.write(bloomPos);
-}
-void closeBlooms(int &bloomPos) {
-  bloomPos += 10;
-//  bloomLeft.write(bloomPos);
-  bloomRight.write(bloomPos);
-}
-
-/* Functions to turn and return the flowers */
-void turn(int &turnPos) {
-  turnPos += 10;
-//  turnLeft.write(turnPos);
-  turnRight.write(120-turnPos);
-  delay(10);
-}
-void reTurn(int &turnPos) {
-  turnPos -= 10;
-//  turnLeft.write(turnPos);
-  turnRight.write(120-turnPos);
-  delay(10);
-}
-
-/* Returns value indicating which sensors are activated */
-int whichSensors() {
-  int whichSensors = 0;
-
-  if (sensorTriggered(sensor0, 250, 900)) {
-    whichSensors += 1;
-  }
-  if (sensorTriggered(sensor1, 250, 900)) {
-    whichSensors += 2;
-  }
-  if (sensorTriggered(sensor2, 150, 900)) {
-    whichSensors += 4;
-  }
-  if (sensorTriggered(sensor3, 300, 1000)) {
-    whichSensors += 8;
-  }
-  if (sensorTriggered(sensor4, 250, 1000)) {
-    whichSensors += 16;
-  }
-  return whichSensors;
-}
 
 void setup() {
   // Set unique IDs for the sensors
@@ -117,9 +70,9 @@ void loop() {
 //  sensorReadSerial();
   // Check which sensors are triggered
   triggedSensors = whichSensors();
-  Serial.print(triggedSensors);
-  Serial.print(",");
-  sensorReadSerial();
+//  Serial.print(triggedSensors);
+//  Serial.print(",");
+//  sensorReadSerial();
 
   // Move based on which sensors are triggered
   switch (triggedSensors) {
@@ -127,7 +80,7 @@ void loop() {
     case 3:                           /* 0 1       */
       prevMillis = millis();
       // Begin turning
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < enter + turnDiff/5) {
         turn(turnPos);
       }
       // Begin blooming
@@ -139,7 +92,7 @@ void loop() {
     case 2:                           /*   1       */
       prevMillis = millis();
       // Turn some more
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < enter + turnDiff/3) {
         turn(turnPos);
       }
       // Bloom some more
@@ -150,7 +103,7 @@ void loop() {
     case 6:                           /*   1 2     */
       prevMillis = millis();
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < leave - turnDiff/2) {
         turn(turnPos);
       }
       // This is about when we want it to be fully bloomed
@@ -163,7 +116,7 @@ void loop() {
     case 12:                          /*     2 3   */
       prevMillis = millis();
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < leave - turnDiff/3) {
         turn(turnPos);
       }
       // Start unblooming
@@ -175,7 +128,7 @@ void loop() {
     case 8:                           /*       3   */
       prevMillis = millis();
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < leave - turnDiff/5) {
         turn(turnPos);
       }
       // Keep unblooming
@@ -222,6 +175,7 @@ void loop() {
         delay(30);
       }
   }
+  Serial.println(turnRight.read());
   
 
   // Uncomment to simplify debugging
