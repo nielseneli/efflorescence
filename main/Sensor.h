@@ -10,7 +10,8 @@
 
 void sensorsRename();
 void sensorsBegin();
-int whichSensors();
+void sensorReadInd(VL53L0X &sensor);
+int sensorTriggered(VL53L0X &sensor, int minEdge, int maxEdge);
 void sensorReadSerial();
 
 #endif
