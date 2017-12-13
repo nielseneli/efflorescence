@@ -30,12 +30,12 @@ Servo turnRight;
 // Bloom edges
 const int opened = 60;
 const int closed = 0;
-const int bloomDiff = 60;
+const int bloomDiff = opened - closed;
 
 // Turn edges
 const int enter = 35;
-const int leave = 105;
-const int turnDiff = 70;
+const int leave = 115;
+const int turnDiff = leave - enter;
 
 // millis
 unsigned long prevMillis = 0;
@@ -69,13 +69,13 @@ void turn(int &turnPos) {
   turnPos += 5;
   turnLeft.write(turnPos);
   turnRight.write(140-turnPos);
-  delay(10);
+  delay(5);
 }
 void reTurn(int &turnPos) {
   turnPos -= 5;
   turnLeft.write(turnPos);
   turnRight.write(140-turnPos);
-  delay(10);
+  delay(5);
 }
 
 // Returns value indicating which sensors are activate
