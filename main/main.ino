@@ -28,6 +28,7 @@ Servo turnRight;
 const int opened = 60;
 const int closed = 0;
 const int bloomDiff = 60;
+
 // Turn edges
 const int enter = 35;
 const int leave = 105;
@@ -35,6 +36,7 @@ const int turnDiff = 70;
 
 // millis
 unsigned long prevMillis = 0;
+unsigned long currentMillis = 0;
 const int checkDelay = 1000;
 
 // Set temp bloomPos variables to beginning vals
@@ -58,13 +60,13 @@ void closeBlooms(int &bloomPos) {
 
 /* Functions to turn and return the flowers */
 void turn(int &turnPos) {
-  turnPos += 5;
+  turnPos += 3;
   turnLeft.write(turnPos);
   turnRight.write(140-turnPos);
   delay(10);
 }
 void reTurn(int &turnPos) {
-  turnPos -= 5;
+  turnPos -= 3;
   turnLeft.write(turnPos);
   turnRight.write(140-turnPos);
   delay(10);
@@ -112,20 +114,18 @@ void setup() {
 }
 
 void loop() {
-  // test the sensors
-//  sensorReadSerial();
   // Check which sensors are triggered
   triggedSensors = whichSensors();
-  Serial.print(triggedSensors);
-  Serial.print(",");
-  sensorReadSerial();
+//  Serial.print(triggedSensors);
+//  Serial.print(",");
+//  sensorReadSerial();
 
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
       prevMillis = millis();
       // Begin turning
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < enter + turnDiff/3) {
         turn(turnPos);
       }
       // Begin blooming
@@ -136,7 +136,7 @@ void loop() {
     case 5:                           /* 0   2     */
       prevMillis = millis();
       // Turn some more
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < leave - turnDiff/2) {
         turn(turnPos);
       }
       // Bloom some more
@@ -147,7 +147,7 @@ void loop() {
     case 4:                           /*     2     */
       prevMillis = millis();
       // Keep on turning
-      if (turnPos >= enter && turnPos < leave) {
+      if (turnPos >= enter && turnPos < leave - turnDiff/3) {
         turn(turnPos);
       }
       // Keep blooming
@@ -179,7 +179,7 @@ void loop() {
       break;
     case 0:                          /*           */
       // check millis
-      int currentMillis = millis();
+      currentMillis = millis();
       if (currentMillis - prevMillis <= checkDelay) {
         break;
       }
@@ -207,11 +207,11 @@ void loop() {
   
 
   // Uncomment to simplify debugging
-  //  Serial.print(triggedSensors);
-  //  Serial.print(',');
-  //  Serial.print(bloomPos);
-  //  Serial.print(',');
-  //  Serial.println(turnPos);
+    Serial.print(triggedSensors);
+    Serial.print(',');
+    Serial.print(bloomPos);
+    Serial.print(',');
+    Serial.println(turnPos);
 
 }
 
