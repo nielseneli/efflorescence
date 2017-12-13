@@ -46,12 +46,12 @@ int triggedSensors;
 
 /* Functions to open and close the flowers */
 void openBlooms(int &bloomPos) {
-  bloomPos -= 5;
+  bloomPos += 5;
   bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
 }
 void closeBlooms(int &bloomPos) {
-  bloomPos += 5;
+  bloomPos -= 5;
   bloomLeft.write(bloomPos);
   bloomRight.write(bloomPos);
 }
@@ -120,23 +120,6 @@ void loop() {
   Serial.print(",");
   sensorReadSerial();
 
-//  while (bloomPos >= opened) {
-//    openBlooms(bloomPos);
-//    delay(50);
-//  }
-//  while (bloomPos <= closed) {
-//    closeBlooms(bloomPos);
-//    delay(50);
-//  }
-//  while (turnPos <= leave) {
-//    turn(turnPos);
-//    delay(50);
-//  }
-//  while (turnPos >= enter) {
-//    reTurn(turnPos);
-//    delay(50);
-//  }
-
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
@@ -146,7 +129,7 @@ void loop() {
         turn(turnPos);
       }
       // Begin blooming
-      if (bloomPos > opened) {
+      if (bloomPos < opened) {
         openBlooms(bloomPos);
       }
       break;
@@ -157,7 +140,7 @@ void loop() {
         turn(turnPos);
       }
       // Bloom some more
-      if (bloomPos > opened) {
+      if (bloomPos < opened) {
         openBlooms(bloomPos);
       }
       break;
@@ -167,8 +150,8 @@ void loop() {
       if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
-      // Start unblooming
-      if (bloomPos > enter) {
+      // Keep blooming
+      if (bloomPos < opened) {
         openBlooms(bloomPos);
       }
       break;
@@ -178,8 +161,8 @@ void loop() {
       if (turnPos >= enter && turnPos < leave) {
         turn(turnPos);
       }
-      // Keep unblooming
-      if (bloomPos < closed) {
+      // Start unblooming
+      if (bloomPos > closed) {
         closeBlooms(bloomPos);
       }
       break;
@@ -190,7 +173,7 @@ void loop() {
         turn(turnPos);
       }
       // Start unblooming
-      if (bloomPos < closed) {
+      if (bloomPos > closed) {
         closeBlooms(bloomPos);
       }
       break;
@@ -201,21 +184,21 @@ void loop() {
         break;
       }
       // Do nothing if they're both set already
-      if (bloomPos == 60 && turnPos == 35) {
+      if (bloomPos == closed && turnPos == enter) {
         break;
       }
       // Reset turn motor if bloom is set
-      while (turnPos > 35 && bloomPos == 60) {
+      while (turnPos > enter && bloomPos == closed) {
         reTurn(turnPos);
         delay(30);
       }
       // Reset bloom motor if turn is set
-      while (bloomPos < 60 && turnPos == 35) {
+      while (bloomPos > closed && turnPos == enter) {
         closeBlooms(bloomPos);
         delay(30);
       }
       // Turn them both if neither are set
-      while (bloomPos < 60 && turnPos > 35) {
+      while (bloomPos > closed && turnPos > enter) {
         closeBlooms(bloomPos);
         reTurn(turnPos);
         delay(30);

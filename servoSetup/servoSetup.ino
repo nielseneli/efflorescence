@@ -31,30 +31,30 @@ void loop() {
   Serial.print(":)");
 
   // Uncomment to watch them turn and bloom
-//  for (bloomPos = 60; bloomPos >= 0; bloomPos -= 1) {
-//    bloomLeft.write(bloomPos);
-//    bloomRight.write(bloomPos);
-//    delay(30);
-//    Serial.println(bloomPos);
-//  }
-//  for (bloomPos = 0; bloomPos <= 60; bloomPos += 1) {
-//    bloomLeft.write(bloomPos);
-//    bloomRight.write(bloomPos);
-//    delay(30);
-//    Serial.println(bloomPos);
-//  }
-//
-//  for (turnPos = 35; turnPos <= 105; turnPos += 1) {
-//    turnLeft.write(turnPos);
-//    turnRight.write(140-turnPos);
-//    delay(30);
-//    Serial.println(turnPos);
-//  }
-//  for (turnPos = 105; turnPos >= 35; turnPos -= 1) {
-//    turnLeft.write(turnPos);
-//    turnRight.write(140-turnPos);
-//    delay(30);
-//    Serial.println(turnPos);
-//  }
+  for (bloomPos = 60; bloomPos >= 0; bloomPos -= 1) {
+    bloomLeft.write(bloomPos);
+    bloomRight.write(bloomPos);
+    delay(30);
+    Serial.println(bloomPos);
+  }
+  for (bloomPos = 0; bloomPos <= 60; bloomPos += 1) {
+    bloomLeft.write(bloomPos);
+    bloomRight.write(bloomPos);
+    delay(30);
+    Serial.println(bloomPos);
+  }
+
+  for (turnPos = 35; turnPos <= 105; turnPos += 1) {
+    turnLeft.write(turnPos);
+    turnRight.write(140-turnPos);
+    delay(30);
+    Serial.println(turnPos);
+  }
+  for (turnPos = 105; turnPos >= 35; turnPos -= 1) {
+    turnLeft.write(turnPos);
+    turnRight.write(140-turnPos);
+    delay(30);
+    Serial.println(turnPos);
+  }
   delay(1000);
 }
