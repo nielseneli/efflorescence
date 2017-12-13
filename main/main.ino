@@ -10,6 +10,9 @@
 #include "Sensor.h"
 #include <VL53L0X.h>
 
+/****************
+ * INITIALIZING *
+ ****************/
 // Initialize VL53L0X sensors
 VL53L0X sensor0;
 VL53L0X sensor1;
@@ -39,14 +42,17 @@ unsigned long prevMillis = 0;
 unsigned long currentMillis = 0;
 const int checkDelay = 1000;
 
-// Set temp bloomPos variables to beginning vals
+// Set position variables to beginning vals
 int bloomPos = closed;
 int turnPos = enter;
 
 // Initialize triggered-sensor-holding variable
 int triggedSensors;
 
-/* Functions to open and close the flowers */
+/*************
+ * FUNCTIONS *
+ *************/
+// Functions to open and close the flowers
 void openBlooms(int &bloomPos) {
   bloomPos += 5;
   bloomLeft.write(bloomPos);
@@ -58,7 +64,7 @@ void closeBlooms(int &bloomPos) {
   bloomRight.write(bloomPos);
 }
 
-/* Functions to turn and return the flowers */
+// Functions to turn and return the flowers
 void turn(int &turnPos) {
   turnPos += 5;
   turnLeft.write(turnPos);
@@ -72,7 +78,7 @@ void reTurn(int &turnPos) {
   delay(10);
 }
 
-/* Returns value indicating which sensors are activated */
+// Returns value indicating which sensors are activate
 int whichSensors() {
   int whichSensors = 0;
 
@@ -94,6 +100,9 @@ int whichSensors() {
   return whichSensors;
 }
 
+/*********
+ * SETUP *
+ *********/
 void setup() {
   // Set unique IDs for the sensors
   sensorsRename();
@@ -113,12 +122,12 @@ void setup() {
   turnRight.write(140-enter);
 }
 
+/********
+ * LOOP *
+ ********/
 void loop() {
   // Check which sensors are triggered
   triggedSensors = whichSensors();
-//  Serial.print(triggedSensors);
-//  Serial.print(",");
-//  sensorReadSerial();
 
   // Move based on which sensors are triggered
   switch (triggedSensors) {
