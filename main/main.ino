@@ -1,6 +1,5 @@
 /*
   Main
-
   Causes flower to bloom and turn when the sensor detects motion
   within two feet of the front of the archway. Plays the C scale
   at the same time.
@@ -26,8 +25,8 @@ Servo turnRight;
 
 // Servo edge values
 // Bloom edges
-const int closed = 60;
-const int opened = 0;
+const int opened = 60;
+const int closed = 0;
 const int bloomDiff = 60;
 // Turn edges
 const int enter = 35;
@@ -139,107 +138,90 @@ void loop() {
 //  }
 
   // Move based on which sensors are triggered
-//  switch (triggedSensors) {
-//    case 1:                           /* 0         */
-//    case 3:                           /* 0 1       */
-//      prevMillis = millis();
-//      // Begin turning
-//      if (turnPos >= enter && turnPos < leave) {
-//        turn(turnPos);
-//      }
-//      // Begin blooming
-//      if (bloomPos > opened) {
-//        openBlooms(bloomPos);
-//      }
-//      break;
-//    case 7:                           /* 0 1 2     */
-//    case 2:                           /*   1       */
-//      prevMillis = millis();
-//      // Turn some more
-//      if (turnPos >= enter && turnPos < leave) {
-//        turn(turnPos);
-//      }
-//      // Bloom some more
-//      if (bloomPos > opened) {
-//        openBlooms(bloomPos);
-//      }
-//      break;
-//    case 6:                           /*   1 2     */
-//      prevMillis = millis();
-//      // Keep on turning
-//      if (turnPos >= enter && turnPos < leave) {
-//        turn(turnPos);
-//      }
-//      // This is about when we want it to be fully bloomed
-//      if (bloomPos > opened) {
-//        openBlooms(bloomPos);
-//      }
-//      break;
-//    case 14:                          /*   1 2 3   */
-//    case 4:                           /*     2     */
-//    case 12:                          /*     2 3   */
-//      prevMillis = millis();
-//      // Keep on turning
-//      if (turnPos >= enter && turnPos < leave) {
-//        turn(turnPos);
-//      }
-//      // Start unblooming
-//      if (bloomPos > enter) {
-//        openBlooms(bloomPos);
-//      }
-//      break;
-//    case 28:                          /*     2 3 4 */
-//    case 8:                           /*       3   */
-//      prevMillis = millis();
-//      // Keep on turning
-//      if (turnPos >= enter && turnPos < leave) {
-//        turn(turnPos);
-//      }
-//      // Keep unblooming
-//      if (bloomPos < closed) {
-//        closeBlooms(bloomPos);
-//      }
-//      break;
-//    case 24:                          /*       3 4 */
-//    case 16:                          /*         4 */
-//      prevMillis = millis();
-//      // Keep on turning
-//      if (turnPos >= enter && turnPos < leave) {
-//        turn(turnPos);
-//      }
-//      // Start unblooming
-//      if (bloomPos < closed) {
-//        closeBlooms(bloomPos);
-//      }
-//      break;
-//    case 0:                          /*           */
-//      // check millis
-//      int currentMillis = millis();
-//      if (currentMillis - prevMillis <= checkDelay) {
-//        break;
-//      }
-//      // Do nothing if they're both set already
-//      if (bloomPos == 60 && turnPos == 35) {
-//        break;
-//      }
-//      // Reset turn motor if bloom is set
-//      while (turnPos > 35 && bloomPos == 60) {
-//        reTurn(turnPos);
-//        delay(30);
-//      }
-//      // Reset bloom motor if turn is set
-//      while (bloomPos < 60 && turnPos == 35) {
-//        closeBlooms(bloomPos);
-//        delay(30);
-//      }
-//      // Turn them both if neither are set
-//      while (bloomPos < 60 && turnPos > 35) {
-//        closeBlooms(bloomPos);
-//        reTurn(turnPos);
-//        delay(30);
-//      }
-//  }
-//  
+  switch (triggedSensors) {
+    case 1:                           /* 0         */
+      prevMillis = millis();
+      // Begin turning
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
+      }
+      // Begin blooming
+      if (bloomPos > opened) {
+        openBlooms(bloomPos);
+      }
+      break;
+    case 5:                           /* 0   2     */
+      prevMillis = millis();
+      // Turn some more
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
+      }
+      // Bloom some more
+      if (bloomPos > opened) {
+        openBlooms(bloomPos);
+      }
+      break;
+    case 4:                           /*     2     */
+      prevMillis = millis();
+      // Keep on turning
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
+      }
+      // Start unblooming
+      if (bloomPos > enter) {
+        openBlooms(bloomPos);
+      }
+      break;
+    case 20:                          /*     2   4 */
+      prevMillis = millis();
+      // Keep on turning
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
+      }
+      // Keep unblooming
+      if (bloomPos < closed) {
+        closeBlooms(bloomPos);
+      }
+      break;
+    case 16:                          /*         4 */
+      prevMillis = millis();
+      // Keep on turning
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
+      }
+      // Start unblooming
+      if (bloomPos < closed) {
+        closeBlooms(bloomPos);
+      }
+      break;
+    case 0:                          /*           */
+      // check millis
+      int currentMillis = millis();
+      if (currentMillis - prevMillis <= checkDelay) {
+        break;
+      }
+      // Do nothing if they're both set already
+      if (bloomPos == 60 && turnPos == 35) {
+        break;
+      }
+      // Reset turn motor if bloom is set
+      while (turnPos > 35 && bloomPos == 60) {
+        reTurn(turnPos);
+        delay(30);
+      }
+      // Reset bloom motor if turn is set
+      while (bloomPos < 60 && turnPos == 35) {
+        closeBlooms(bloomPos);
+        delay(30);
+      }
+      // Turn them both if neither are set
+      while (bloomPos < 60 && turnPos > 35) {
+        closeBlooms(bloomPos);
+        reTurn(turnPos);
+        delay(30);
+      }
+  }
+  
 
   // Uncomment to simplify debugging
   //  Serial.print(triggedSensors);
