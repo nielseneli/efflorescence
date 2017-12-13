@@ -123,8 +123,8 @@ void loop() {
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
-    case 2:
-    case 3:
+    case 2:                           /*   1       */
+    case 3:                           /* 0 1       */
       prevMillis = millis();
       // Begin turning
       if (turnPos >= enter && turnPos < enter + turnDiff/3) {
@@ -136,8 +136,8 @@ void loop() {
       }
       break;
     case 5:                           /* 0   2     */
-    case 6:
-    case 7:
+    case 6:                           /*   1 2     */
+    case 7:                           /* 0 1 2     */
       prevMillis = millis();
       // Turn some more
       if (turnPos >= enter && turnPos < leave - turnDiff/2) {
@@ -149,7 +149,7 @@ void loop() {
       }
       break;
     case 4:                           /*     2     */
-    case 14:
+    case 14:                          /*   1 2 3   */
       prevMillis = millis();
       // Keep on turning
       if (turnPos >= enter && turnPos < leave - turnDiff/3) {
@@ -160,8 +160,9 @@ void loop() {
         openBlooms(bloomPos);
       }
       break;
+    case 8:                           /*       3   */
     case 20:                          /*     2   4 */
-    case 12:
+    case 12:                          /*     2 3   */
       prevMillis = millis();
       // Keep on turning
       if (turnPos >= enter && turnPos < leave) {
@@ -173,8 +174,8 @@ void loop() {
       }
       break;
     case 16:                          /*         4 */
-    case 24:
-    case 28:
+    case 24:                          /*       3 4 */
+    case 28:                          /*     2 3 4 */
       prevMillis = millis();
       // Keep on turning
       if (turnPos >= enter && turnPos < leave) {
@@ -185,7 +186,7 @@ void loop() {
         closeBlooms(bloomPos);
       }
       break;
-    case 0:                          /*           */
+    case 0:                           /*           */
       // check millis
       currentMillis = millis();
       if (currentMillis - prevMillis <= checkDelay) {
