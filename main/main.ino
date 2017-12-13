@@ -60,13 +60,13 @@ void closeBlooms(int &bloomPos) {
 
 /* Functions to turn and return the flowers */
 void turn(int &turnPos) {
-  turnPos += 3;
+  turnPos += 5;
   turnLeft.write(turnPos);
   turnRight.write(140-turnPos);
   delay(10);
 }
 void reTurn(int &turnPos) {
-  turnPos -= 3;
+  turnPos -= 5;
   turnLeft.write(turnPos);
   turnRight.write(140-turnPos);
   delay(10);
@@ -107,10 +107,10 @@ void setup() {
   turnRight.attach(11);
 
   // Set servos to starting position
-  bloomLeft.write(bloomPos);
-  turnLeft.write(turnPos);
-  bloomRight.write(bloomPos);
-  turnRight.write(140-turnPos);
+  bloomLeft.write(opened);
+  turnLeft.write(opened);
+  bloomRight.write(enter);
+  turnRight.write(140-enter);
 }
 
 void loop() {
@@ -123,6 +123,8 @@ void loop() {
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
+    case 2:
+    case 3:
       prevMillis = millis();
       // Begin turning
       if (turnPos >= enter && turnPos < enter + turnDiff/3) {
@@ -134,6 +136,8 @@ void loop() {
       }
       break;
     case 5:                           /* 0   2     */
+    case 6:
+    case 7:
       prevMillis = millis();
       // Turn some more
       if (turnPos >= enter && turnPos < leave - turnDiff/2) {
@@ -145,6 +149,7 @@ void loop() {
       }
       break;
     case 4:                           /*     2     */
+    case 14:
       prevMillis = millis();
       // Keep on turning
       if (turnPos >= enter && turnPos < leave - turnDiff/3) {
@@ -156,6 +161,7 @@ void loop() {
       }
       break;
     case 20:                          /*     2   4 */
+    case 12:
       prevMillis = millis();
       // Keep on turning
       if (turnPos >= enter && turnPos < leave) {
@@ -167,6 +173,8 @@ void loop() {
       }
       break;
     case 16:                          /*         4 */
+    case 24:
+    case 28:
       prevMillis = millis();
       // Keep on turning
       if (turnPos >= enter && turnPos < leave) {
@@ -209,9 +217,11 @@ void loop() {
   // Uncomment to simplify debugging
     Serial.print(triggedSensors);
     Serial.print(',');
-    Serial.print(bloomPos);
-    Serial.print(',');
-    Serial.println(turnPos);
+//    Serial.print(bloomPos);
+//    Serial.print(',');
+//    Serial.print(turnPos);
+//    Serial.print(',');
+    sensorReadSerial();
 
 }
 
