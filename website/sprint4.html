@@ -95,8 +95,19 @@
 										<section>
 											<h3>Electrical</h3>
 											<p>
-												Wiring is hard, man.
-											</p>
+												By popular demand, we increased the number of flowers from three to five, thus increasing the number of servos for our configuration from six to ten. We also added two additional sensors to the other side of the archway in a staggered position. Even valued servos and sensors were located on the left, while odd valued ones were located on the right. </p>
+
+                                            <p>[arch image, will provide tomorrow] In order to support the sheer number of servos and sensors, we considered either switching over to an Arduino Due, using two Arduino Unos, or wiring servos with the same function on each side of the arch to the same digital port. The first option allowed for many more digital ports, but wouldn’t consistently work with our time-of-flight sensors. The second option would not be too difficult, but we decided on the third option since it would allow us to keep as much of the current configuration as possible for both the software and electrical subsystems. Thus, all the turn motors on one side were wired to and controlled from the same digital port, the bloom motors were attached to another port, and so on. </p>
+
+                                            <p>Once we had the archway painted and assembled, we were able to begin attaching wires inside the hardware closet, trimming, twisting, and crimping them along the way. [insert wires image from Ana, the one in the presentation] </p>
+
+                                            <p>One problem we faced with yet another increase in servos and sensors was the inevitable increase in current draw. Although we didn’t realize it for a while, the ten servos were past requiring two amps of current. This meant the 5V USB power supply was far from sufficient in powering the servos. We ended up moving to a desktop power supply when attempts at using other adapters didn’t work. The time-of-flight sensors, however, could not handle this amount of current. If it had been earlier in the project, we could have dealt with this by dropping the current before sending it to the sensors, but since most everything was already wired into the arch, we decided that powering the sensors directly from the Arduino was the quickest and most reliable option. </p>
+
+                                            <p>In addition, the I2C bus was no longer working due to capacitance across the length of wires over the arch. Although this configuration had worked in that past, the relocation of our archway and its newfound proximity to electromagnetic interference caused the sensors to fail when the two sensors on the right were wired. Thus, we removed the connection to those sensors. We later added the two sensors back, but this time on the left side so we could limit the wire length and interference as much as possible. </p>
+
+                                            <p>Our configuration for this sprint is our final configuration. We kept the unused wires in the arch since many required unraveling to remove. It wasn’t worth the effort and they would not affect the system unplugged. [final wire setup, need to take a picture of] [schematic again]</p>
+
+
 										</section>
 
 										<section>
@@ -123,25 +134,25 @@
 													<li>
 														<article class="box post-summary">
 															<h3><a href="process.html">Process</a></h3>
-															<p>FILL IN TEXT</p>
+															<p>HOWdy, partner?</p>
 														</article>
 													</li>
 													<li>
 														<article class="box post-summary">
 															<h3><a href="sprint1.html">Sprint 1</a></h3>
-															<p>FILL IN TEXT</p>
+															<p>The Vision</p>
 														</article>
 													</li>
 													<li>
 														<article class="box post-summary">
 															<h3><a href="sprint2.html">Sprint 2</a></h3>
-															<p>FILL IN TEXT</p>
+															<p>The Plan</p>
 														</article>
 													</li>
 													<li>
 														<article class="box post-summary">
 															<h3><a href="sprint3.html">Sprint 3</a></h3>
-															<p>It's beginning to look a lot like an arch!</p>
+															<p>The Action</p>
 														</article>
 													</li>
 												</ul>
