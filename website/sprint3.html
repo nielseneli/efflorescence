@@ -89,8 +89,18 @@
                                             <section>
 												<h3>Electrical</h3>
 												<p>
-													Zapp Zapp mofos
-												</p>
+													This sprint, we resolved to completely drop IR sensors from our motion detection system, which provided wildly inaccurate readings and served merely as a proof of concept and a means to integrate in the previous two sprints. However, it was late enough in the project that the risk of relying on the raspi and camera system, which we knew nothing about at this point, was deemed too high. Sensors seemed the way to go.
+                                                </p>
+
+                                                <p> After exploring various distance and ultrasonic sensors, we decided on using the VL53L0X time-of-flight ranging sensors. It could read in continuous data and accurately and linearly measure distances up to 120 centimeters. </p>
+
+                                                <p>To configure for five sensors, we daisy-chained the I2C ports (SLC and SDA) and wired the shutdown (SHDN) pin of each sensor to a different digital port in the Arduino. We wrote a program that shut down all the pins before bringing one sensor back online at a time and changing its address in the I2C bus. We also began testing servos at this time, hooking up six, enough for three flowers. At this point, we started pulling too much current from the Arduino with the sheer number of components, so we began relying on an external 5V USB power supply to power the sensors and servos. </p>
+
+                                                <p>In preparation for the genesis of the archway, we began transferring our sensors and servos from the testing breadboard to two protoboards, one for each side of the archway. On each protoboard, one power rail was used as intended, while the other was used for the I2C bus. At this point, we weren’t sure of exactly how much wire we would need, so we erred on the side of more wire. We ran a ridiculously long set of wires from one protoboard to the other, connecting the appropriate power rails. We tested the sensors and servos with this setup to make sure they could still work with this length of wires. </p>
+
+                                                <p>[Mass of wires] The walls of the archway were shopbotted just in time to temporarily attach the Arduino, protoboard, sensors, and servos to one wall of the arch to get a working integration. Since we still needed to paint our the arch before assembling it, we decided that quick and dirty was sufficient for wire attachments for this sprint.[Quick and dirty wire attachment][Sensors are watching] </p>
+
+												
 
 											</section>
 
