@@ -67,44 +67,30 @@
 
 											<header>
 												<h2>Software subsystem</h2>
-												<p>There's like some stuff, I swear.</p>
-												<ul class="meta">
-													<li class="icon fa-clock-o">5 days ago</li>
-													<li class="icon fa-comments"><a href="#">1,024</a></li>
-												</ul>
 											</header>
 
 											<section>
-												<span class="image featured"><img src="images/pic05.jpg" alt="" /></span>
+												The Arduino communicates with 5 VL53L0X time-of-flight sensors and 10 servos. A switch statement
+												decides, based on the sensor input, how far to turn or bloom the flowers. After a second of no
+												input, the flowers turn back toward the entrance and close, waiting for the next passerby.
+											</section>
+
+											<section>
+												<h3>Sensors</h3>
 												<p>
-													I honestly don't know if we even want an image here.
+													We communicate with the sensors through I2C. Because the sensors are identical, we assign
+													them unique addresses every time the system starts. We set them to read continuously.
+													In the loop, we read each sensor and set a “triggedSensors” variable to a unique value for
+													any combination of triggered sensors, where triggered means reading within a given set of
+													values. Much of the sensor functionality is accessed through a header file.
 												</p>
 											</section>
 
 											<section>
-												<h3>Things</h3>
+												<h3>Servos</h3>
 												<p>
-													There's like an arduino I guess. Probably also a RasPi, but you know, we don't know.
-													Also like git... :(
-												</p>
-											</section>
-
-											<section>
-												<h3>So in conclusion ...</h3>
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-													justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-													ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-													vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-													Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-													rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-													Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-													Phasellus sed nisl vitae.
-												</p>
-												<p>
-													Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-													fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-													Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
+													We communicate with the servos through PWM ports. Depending on which sensors are triggered,
+													a switch statement instructs the motors to turn and bloom to different specifications.
 												</p>
 											</section>
 

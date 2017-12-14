@@ -67,44 +67,41 @@
 
 											<header>
 												<h2>Electrical Subsystem</h2>
-												<p>We made something cool and it's all connected with electrical wizardry.</p>
 											</header>
 
 											<section>
-												<span class="image featured"><img src="images/pic05.jpg" alt="" /></span>
 												<p>
-													This (the above picture) should probably be a circuit diagram or something,
-													I don't know.
-												</p>
-											</section>
-
-											<section>
-												<h3>How do?</h3>
-												<p>
-													We used a servo to rotate the center of the flower, either pulling the
-													petals towards it so it closes or pushing the petals outwards so it blooms.
-													In our first pass, we implemented motion detection with an IR sensor,
-													which told the servo to rotate when something came within about fifteen
-													inches of the sensor.
-												</p>
-											</section>
-
-											<section>
-												<h3>So in conclusion ...</h3>
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-													justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-													ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-													vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-													Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-													rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-													Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-													Phasellus sed nisl vitae.
+													Consisting of ten (10) servos, five (5) VL53L0X time-of-flight sensors, two (2) protoboards,
+													one (1) Arduino Uno, one (1) desktop power supply, and approximately one (1) whole pound of wire,
+													the electrical system will truly shock any reasonable person.
 												</p>
 												<p>
-													Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-													fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-													Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
+													[Physical placement of components sans wires]
+												</p>
+												<p>
+													[Schematic of components]
+												</p>
+												<p>
+													The Arduino and desktop power supply are located on the left side of the arch. The power supply,
+													providing 5V at 2A, is wired directly to the left protoboard to provide power to the servos.
+													With a total of five moving flowers, there are ten servos, half for blooming and half for
+													turning. Six servos are located on the left for the three flowers there and four servos are
+													located on the right. There are two wires for power that run across the archway to deliver
+													current from the left protoboard to the right protoboard. In addition, there is a wire for the
+													digital port for the right blooming servos and another for the right turning servos running from
+													the Arduino to the right protoboard. The power and pulse are then distributed from the right
+													protoboard to the respective servos on that side. All the right blooming servos are wired to the
+													same digital port, as are all right turning servos to their own port, and so on.
+												</p>
+												<p>
+													The time-of-flight sensors are located on the left side of the arch. They are powered directly by
+													the Arduino, as opposed to the desktop power supply, through the terminal strips of the left
+													protoboard since they cannot handle the current required by the ten servos. The I2C ports are
+													wired in parallel on one power rail of the left protoboard. The shutdown pin of each sensor is
+													wired to a separate digital pin in the Arduino so that the sensors can be reset with a new address
+													in the I2C bus. The sensors are all on one side as opposed to staggered on each side due to
+													electromagnetic interference as a result of requiring long wires to reach from the Arduino and
+													left protoboard to the right protoboard.
 												</p>
 											</section>
 
