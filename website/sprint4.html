@@ -72,49 +72,101 @@
 										<section>
 											<h3>Mechanical</h3>
 											<p>
-												The archway construction had several hiccups during its production. In the initial stages, the Shopbot (CNC Router) was rather finicky. There were a few small issues with software and such that had to be fixed by the NINJAs before we could continue. This, along with the fact that the wood, especially the 5.5 mm, was slightly warped. Due to zeroing at a consistant Z-plane hight, the machine cuts slightly different depths on the board. Screwing down the sheet was imperitive, we had learned.
+												The archway construction had several hiccups during its production. In the initial stages, the Shopbot
+												(CNC Router) was rather finicky. There were a few small issues with software and such that had to be
+												fixed by the NINJAs before we could continue. This, along with the fact that the wood, especially the
+												5.5 mm, was slightly warped. Due to zeroing at a consistant Z-plane hight, the machine cuts slightly
+												different depths on the board. Screwing down the sheet was imperitive, we had learned.
 											</p>
 											<p>
-													For the three-quarter inch boards (really 23/32 in/measured at about 0.71), while running through the pockets for the wiring cavities, the machine threw an error. After a moment of investigation and restarting the toolpath, the Shopbot began cutting the pocket higher than before. We measured the new height to be correct. We suspect the previous height to be a little deeper than input due to either a slight zeroing error by us or the computer (as the beginning of the first toolpath was correct as well). The cut may have gotten slightly more and more off track as it went on.
+													For the three-quarter inch boards (really 23/32 in/measured at about 0.71), while running through
+													the pockets for the wiring cavities, the machine threw an error. After a moment of investigation
+													and restarting the toolpath, the Shopbot began cutting the pocket higher than before. We measured
+													the new height to be correct. We suspect the previous height to be a little deeper than input due
+													to either a slight zeroing error by us or the computer (as the beginning of the first toolpath was
+													correct as well). The cut may have gotten slightly more and more off track as it went on.
 											</p>
 											<p>
-													While cutting the cross beams, a mistake restarting at the wrong point made a decent sized pocket along the top. This had to be filled with wood filler and sanded before this piece could be painted. This definitely falls under the "measure twice cut once" lessons learned.
+													While cutting the cross beams, a mistake restarting at the wrong point made a decent sized pocket
+													along the top. This had to be filled with wood filler and sanded before this piece could be painted.
+													This definitely falls under the "measure twice cut once" lessons learned.
 											</p>
 											<p>
-													When we finally got to the painting portion, after initial fittings to determine if all cuts were correct, we took the pieces to the composites bay to spray paint them. The team purchased 3 cans of spray paint and used them up in less than half an hour and only 6 "feet" and one and a half beams. It ended up taking 3 total trips to Home Depot, 11 cans, and looking like we huffed paint in under 24 hours to finish all of the pieces. In retrospect, using a few brushes and a can of regular paint would have been more reasonable. Though timewise it would likely not have been that much faster, the choice would have saved an hour of driving and likely 20ish bucks in paint. While the decision to spray paint was based on a previous small project, the sheer amount of paint means that any proect of painting to this scale will be done with brush in hand.
+													When we finally got to the painting portion, after initial fittings to determine if all cuts were
+													correct, we took the pieces to the composites bay to spray paint them. The team purchased 3 cans of
+													spray paint and used them up in less than half an hour and only 6 "feet" and one and a half beams.
+													It ended up taking 3 total trips to Home Depot, 11 cans, and looking like we huffed paint in under 24
+													hours to finish all of the pieces. In retrospect, using a few brushes and a can of regular paint would
+													have been more reasonable. Though timewise it would likely not have been that much faster, the choice
+													would have saved an hour of driving and likely 20ish bucks in paint. While the decision to spray paint
+													was based on a previous small project, the sheer amount of paint means that any proect of painting to
+													this scale will be done with brush in hand.
 											</p>
 											<p>
-													A suggestion during a sprint review was to use thin brass tubing on our flowers rather than the rolled paper we had at the time. Because brass tubing is both expensive and heavy, we decided on painting coffee straws the brassy color. While we love the outcome, replacing all of the tubing required rethreading all of the strings, costing a fair amount of time (an one member's remaining sanity). This gave it a more legitimate look instead of a child’s art project vibe.
+													A suggestion during a sprint review was to use thin brass tubing on our flowers rather than the rolled
+													paper we had at the time. Because brass tubing is both expensive and heavy, we decided on painting
+													coffee straws the brassy color. While we love the outcome, replacing all of the tubing required
+													rethreading all of the strings, costing a fair amount of time (an one member's remaining sanity).
+													This gave it a more legitimate look instead of a child’s art project vibe.
 
 											</p>
 											<p>
-													The flowers contain two servos and many laser cut pieces, making them a big weighty to mount. Early ideation for this was adhesives, lasercut pieces, and ultimately 3D printed mounts, which seemed most sturdy and logical to pursue. With the amount of time that was needed to put up so many, though, a just-before-bed idea from Meaghen took us back to simplicity. The vine string through the servo's screw holes were able to stabily mount the servo upright against a cross section on the lattice. The servo and wires could then easily be hidden with more origami paper.
+													The flowers contain two servos and many laser cut pieces, making them a big weighty to mount. Early
+													ideation for this was adhesives, lasercut pieces, and ultimately 3D printed mounts, which seemed most
+													sturdy and logical to pursue. With the amount of time that was needed to put up so many, though, a
+													just-before-bed idea from Meaghen took us back to simplicity. The vine string through the servo's
+													screw holes were able to stabily mount the servo upright against a cross section on the lattice. The
+													servo and wires could then easily be hidden with more origami paper.
 											</p>
 										</section>
 
 										<section>
 											<h3>Electrical</h3>
 											<p>
-												By popular demand, we increased the number of flowers from three to five, thus increasing the number of servos for our configuration from six to ten. We also added two additional sensors to the other side of the archway in a staggered position. Even valued servos and sensors were located on the left, while odd valued ones were located on the right.
+												By popular demand, we increased the number of flowers from three to five, thus increasing the number of
+												servos for our configuration from six to ten. We also added two additional sensors to the other side of
+												the archway in a staggered position. Even valued servos and sensors were located on the left, while odd
+												valued ones were located on the right.
 											</p>
 
                       <p>
-												In order to support the sheer number of servos and sensors, we considered either switching over to an Arduino Due, using two Arduino Unos, or wiring servos with the same function on each side of the arch to the same digital port. The first option allowed for many more digital ports, but wouldn’t consistently work with our time-of-flight sensors. The second option would not be too difficult, but we decided on the third option since it would allow us to keep as much of the current configuration as possible for both the software and electrical subsystems. Thus, all the turn motors on one side were wired to and controlled from the same digital port, the bloom motors were attached to another port, and so on.
+												In order to support the sheer number of servos and sensors, we considered either switching over to an
+												Arduino Due, using two Arduino Unos, or wiring servos with the same function on each side of the arch
+												to the same digital port. The first option allowed for many more digital ports, but wouldn’t
+												consistently work with our time-of-flight sensors. The second option would not be too difficult, but
+												we decided on the third option since it would allow us to keep as much of the current configuration as
+												possible for both the software and electrical subsystems. Thus, all the turn motors on one side were
+												wired to and controlled from the same digital port, the bloom motors were attached to another port, and
+												so on.
 											</p>
 											<p>
-												Once we had the archway painted and assembled, we were able to begin attaching wires inside the hardware closet, trimming, twisting, and crimping them along the way.
+												Once we had the archway painted and assembled, we were able to begin attaching wires inside the hardware
+												closet, trimming, twisting, and crimping them along the way.
 											</p>
                       <p>
 												[insert wires image from Ana, the one in the presentation]
 											</p>
                       <p>
-												One problem we faced with yet another increase in servos and sensors was the inevitable increase in current draw. Although we didn’t realize it for a while, the ten servos were past requiring two amps of current. This meant the laptop USB power supply was far from sufficient in powering the servos. We ended up moving to a desktop power supply when attempts at using other adapters didn’t work. The time-of-flight sensors, however, could not handle this amount of current. If it had been earlier in the project, we could have dealt with this by dropping the current before sending it to the sensors, but since most everything was already wired into the arch, we decided that powering the sensors directly from the Arduino was the quickest and most reliable option.
+												One problem we faced with yet another increase in servos and sensors was the inevitable increase in
+												current draw. Although we didn’t realize it for a while, the ten servos were past requiring two amps
+												of current. This meant the laptop USB power supply was far from sufficient in powering the servos. We
+												ended up moving to a desktop power supply when attempts at using other adapters didn’t work. The
+												time-of-flight sensors, however, could not handle this amount of current. If it had been earlier in
+												the project, we could have dealt with this by dropping the current before sending it to the sensors,
+												but since most everything was already wired into the arch, we decided that powering the sensors
+												directly from the Arduino was the quickest and most reliable option.
 											</p>
                       <p>
-												In addition, the I2C bus was no longer working due to capacitance across the length of wires over the arch. Although this configuration had worked in that past, the relocation of our archway and its newfound proximity to electromagnetic interference caused the sensors to fail when the two sensors on the right were wired. Thus, we removed the connection to those sensors. We later added the two sensors back, but this time on the left side so we could limit the wire length and interference as much as possible.
+												In addition, the I2C bus was no longer working due to capacitance across the length of wires over the
+												arch. Although this configuration had worked in that past, the relocation of our archway and its
+												newfound proximity to electromagnetic interference caused the sensors to fail when the two sensors on
+												the right were wired. Thus, we removed the connection to those sensors. We later added the two sensors
+												back, but this time on the left side so we could limit the wire length and interference as much as possible.
 											</p>
                       <p>
-												Our configuration for this sprint is our final configuration. We kept the unused wires in the arch since many required unraveling to remove. It wasn’t worth the effort and they would not affect the system while unplugged. All of our wires are attached to the frame by Gorilla tape and some
+												Our configuration for this sprint is our final configuration. We kept the unused wires in the arch
+												since many required unraveling to remove. It wasn’t worth the effort and they would not affect the
+												system while unplugged. All of our wires are attached to the frame by Gorilla tape and some
 											</p>
 											<p>
 												[final wire setup, need to take a picture of]
@@ -132,10 +184,17 @@
 										<section>
 											<h3>Software</h3>
 											<p>
-												Last sprint’s code got updated to work with the new servo configuration (10 servos, signal sent to 4 categories of servos). The two sensors on the right side got integrated. More repeated lines and hardcoded numbers were moved into functions and variables to improve readability and decrease badness.
+												Last sprint’s code got updated to work with the new servo configuration (10 servos, signal sent to 4
+												ategories of servos). The two sensors on the right side got integrated. More repeated lines and
+												hardcoded numbers were moved into functions and variables to improve readability and decrease badness.
 											</p>
 											<p>
-												There was a moment of panic when the system began breaking consistently after wiring in the rest of the servos for the flowers before we realized that the 10 servos were drawing too much current. In the process of rewiring into a new power supply, the two new sensors on the right side were deintegrated briefly, then reintegrated the next day. The current code, visible on <a href="https://github.com/nielsenlouise/efflorescence/">GitHub</a>, is reasonably neat, readable, and functional.
+												There was a moment of panic when the system began breaking consistently after wiring in the rest of
+												the servos for the flowers before we realized that the 10 servos were drawing too much current. In
+												the process of rewiring into a new power supply, the two new sensors on the right side were
+												deintegrated briefly, then reintegrated the next day. The current code, visible on
+												<a href="https://github.com/nielsenlouise/efflorescence/">GitHub</a>, is reasonably neat, readable,
+												and functional.
 											</p>
 										</section>
 

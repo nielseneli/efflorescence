@@ -73,43 +73,57 @@
 											<section>
 												<h3>Mechanical: Flowers</h3>
 												<p>
-													Last sprint, we learned that our flowers were too large, too heavy, and had a terrifying habit of grabbing people with its oversized petals. This sprint, we scaled the flower down to a much more reasonable size. Now they’re still big enough to stand out, but they won’t take anyone captive. We also laser cut the flower skeletons this time instead of 3D printing them because the process was way faster, especially with three flowers in our MVP, and the organic wooden look matched our aesthetic more than brightly colored plastic filament did.
+													Last sprint, we learned that our flowers were too large, too heavy, and had a terrifying habit of
+													grabbing people with its oversized petals. This sprint, we scaled the flower down to a much more
+													reasonable size. Now they’re still big enough to stand out, but they won’t take anyone captive.
+													We also laser cut the flower skeletons this time instead of 3D printing them because the process
+													was way faster, especially with three flowers in our MVP, and the organic wooden look matched our
+													aesthetic more than brightly colored plastic filament did.
 												</p>
 												<p>
 													[Laser cut flower skeleton]
 												</p>
 												<p>
-													To make the flower more eye-catching, we experimented with different colored paper for petals of different shapes and sizes. We added a stamen to the center of the flower to further improve our design.
+													To make the flower more eye-catching, we experimented with different colored paper for petals of
+													different shapes and sizes. We added a stamen to the center of the flower to further improve our
+													design.
 												</p>
 												<p>
 													[Alternate flower design]
 												</p>
 												<p>
-													We finally settled on purple petals with a similar origami fold as in the previous sprint, modified for size and shape. We also made the center of the flower a yellow-orange gradient to contrast the flower petals.
+													We finally settled on purple petals with a similar origami fold as in the previous sprint,
+													modified for size and shape. We also made the center of the flower a yellow-orange gradient
+													to contrast the flower petals.
 												</p>
 												<p>
 													[Final petal design]
 												</p>
 												<p>
-													Instead of using the stiff pipe cleaners or the unattractive coffee stirrers, we decided to make the blooming mechanism with paper tubes that matched the yellow-orange flower centers. These paper tubes, however, were slightly thicker than anticipated.
+													Instead of using the stiff pipe cleaners or the unattractive coffee stirrers, we decided to
+													make the blooming mechanism with paper tubes that matched the yellow-orange flower centers.
+													These paper tubes, however, were slightly thicker than anticipated.
 												</p>
 												<p>
 													[Paper tubes for blooming mechanism]
 												</p>
 												<p>
-													With the blooming mechanism in place and servos attached, we had a completed flower. We replicated this process with two other flowers for a total of three flowers.
+													With the blooming mechanism in place and servos attached, we had a completed flower. We
+													replicated this process with two other flowers for a total of three flowers.
 												</p>
 												<p>
 													[Completed flower with stamen]
 												</p>
 												<p>
-													We mounted the turn servo to the rest of the flower using cardboard, which was surprisingly sturdier than the 3D printed attachment.
+													We mounted the turn servo to the rest of the flower using cardboard, which was
+													surprisingly sturdier than the 3D printed attachment.
 												</p>
 												<p>
 													[Turn servo attachment]
 												</p>
 												<p>
-													Due to time constraints, we attached the turn servo of the flowers to the archway using duct tape rather than design another attachment mechanism.
+													Due to time constraints, we attached the turn servo of the flowers to the archway using duct
+													tape rather than design another attachment mechanism.
 												</p>
 												<p>
 													[Flower attachment]
@@ -119,7 +133,8 @@
 											<section>
 												<h3>Mechanical: Archway</h3>
 												<p>
-													Finally, we started on the arch for the flowers to rest on. We made the two walls of the arch and mounted the flowers on those.
+													Finally, we started on the arch for the flowers to rest on. We made the two walls of the
+													arch and mounted the flowers on those.
 												</p>
 												<p>
 													[Arch walls with flowers and sensors]
@@ -132,7 +147,11 @@
 											<section>
 												<h3>Software</h3>
 												<p>
-													A switch statement moves the bloom and turn servos following the input from the three sensors. It’s pretty twitchy and we’re definitely looking forward to integrating the other two sensors to increase the resolution. Additionally, the bit where the heart of the code is a switch statement that switches on the value of a variable that is decided by kind of approximating bitshifting---that bit feels pretty jank.
+													A switch statement moves the bloom and turn servos following the input from the three
+													sensors. It’s pretty twitchy and we’re definitely looking forward to integrating the
+													other two sensors to increase the resolution. Additionally, the bit where the heart of
+													the code is a switch statement that switches on the value of a variable that is decided
+													by kind of approximating bitshifting---that bit feels pretty jank.
 												</p>
 
 											</section>
@@ -140,19 +159,37 @@
                       <section>
 												<h3>Electrical</h3>
 												<p>
-													This sprint, we resolved to completely drop IR sensors from our motion detection system, which provided wildly inaccurate readings and served merely as a proof of concept and a means to integrate in the previous two sprints. However, it was late enough in the project that the risk of relying on the raspi and camera system, which we knew nothing about at this point, was deemed too high. Sensors seemed the way to go.
+													This sprint, we resolved to completely drop IR sensors from our motion detection system,
+													which provided wildly inaccurate readings and served merely as a proof of concept and a
+													means to integrate in the previous two sprints. However, it was late enough in the project
+													that the risk of relying on the raspi and camera system, which we knew nothing about at
+													this point, was deemed too high. Sensors seemed the way to go.
                         </p>
 
                         <p>
-													After exploring various distance and ultrasonic sensors, we decided on using the VL53L0X time-of-flight ranging sensors. It could read in continuous data and accurately and linearly measure distances up to 120 centimeters.
+													After exploring various distance and ultrasonic sensors, we decided on using the VL53L0X
+													time-of-flight ranging sensors. It could read in continuous data and accurately and
+													linearly measure distances up to 120 centimeters.
 												</p>
 
                         <p>
-													To configure for five sensors, we daisy-chained the I2C ports (SLC and SDA) and wired the shutdown (SHDN) pin of each sensor to a different digital port in the Arduino. We wrote a program that shut down all the pins before bringing one sensor back online at a time and changing its address in the I2C bus. We also began testing servos at this time, hooking up six, enough for three flowers. At this point, we started pulling too much current from the Arduino with the sheer number of components, so we began relying on an external 5V USB power supply to power the sensors and servos.
+													To configure for five sensors, we daisy-chained the I2C ports (SLC and SDA) and wired the
+													shutdown (SHDN) pin of each sensor to a different digital port in the Arduino. We wrote a
+													program that shut down all the pins before bringing one sensor back online at a time and
+													changing its address in the I2C bus. We also began testing servos at this time, hooking up
+													six, enough for three flowers. At this point, we started pulling too much current from the
+													Arduino with the sheer number of components, so we began relying on an external 5V USB power
+													supply to power the sensors and servos.
 												</p>
 
                         <p>
-													In preparation for the genesis of the archway, we began transferring our sensors and servos from the testing breadboard to two protoboards, one for each side of the archway. On each protoboard, one power rail was used as intended, while the other was used for the I2C bus. At this point, we weren’t sure of exactly how much wire we would need, so we erred on the side of more wire. We ran a ridiculously long set of wires from one protoboard to the other, connecting the appropriate power rails. We tested the sensors and servos with this setup to make sure they could still work with this length of wires.
+													In preparation for the genesis of the archway, we began transferring our sensors and servos
+													from the testing breadboard to two protoboards, one for each side of the archway. On each
+													protoboard, one power rail was used as intended, while the other was used for the I2C bus.
+													At this point, we weren’t sure of exactly how much wire we would need, so we erred on the
+													side of more wire. We ran a ridiculously long set of wires from one protoboard to the other,
+													connecting the appropriate power rails. We tested the sensors and servos with this setup to
+													make sure they could still work with this length of wires.
 												</p>
 
 												<p>
@@ -160,7 +197,10 @@
 												</p>
 
                         <p>
-													The walls of the archway were shopbotted just in time to temporarily attach the Arduino, protoboard, sensors, and servos to one wall of the arch to get a working integration. Since we still needed to paint our the arch before assembling it, we decided that masking tape was sufficient for wire attachments for this sprint.
+													The walls of the archway were shopbotted just in time to temporarily attach the Arduino,
+													protoboard, sensors, and servos to one wall of the arch to get a working integration. Since
+													we still needed to paint our the arch before assembling it, we decided that masking tape
+													was sufficient for wire attachments for this sprint.
 												</p>
 
 												<p>

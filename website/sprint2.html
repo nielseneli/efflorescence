@@ -70,32 +70,54 @@
 										</header>
 										<section>
 											<p>
-												This sprint, we wanted to make a prototyped archway with a pretty flower than blooms and turns after a “trip-wire” near the entry to the archway is triggered. We also wanted to ideate aesthetic archways, research speakers, and get our website on the PoE server.
+												This sprint, we wanted to make a prototyped archway with a pretty flower that
+												blooms and turns after a “trip-wire” near the entry to the archway is triggered.
+												We also wanted to ideate aesthetic archways, research speakers, and get our website
+												on the PoE server.
 											</p>
 											<p>
-												Additionally, we finally decided what our aesthetic would be. We’re aiming for an elegant, graceful final product with vibrantly colored, delicate, and bioinspired flowers on an intricate but robust wooden archway. We say nothing here of the wiring or other components because they should be hidden.
+												Additionally, we finally decided what our aesthetic would be. We’re aiming for
+												an elegant, graceful final product with vibrantly colored, delicate, and bioinspired
+												flowers on an intricate but robust wooden archway. We say nothing here of the
+												wiring or other components because they should be hidden.
 											</p>
 											<p>
-												The archway is currently our largest technical risk. We are concerned about making an archway that is both “intricate and robust” and capable of supporting and fitting the flowers and hiding the speakers, camera, raspi, arduino, and other circuitry.
+												The archway is currently our largest technical risk. We are concerned about making
+												an archway that is both “intricate and robust” and capable of supporting and fitting
+												the flowers and hiding the speakers, camera, raspi, arduino, and other circuitry.
 											</p>
 										</section>
 
 										<section>
 											<h3>Mechanical: flowers</h3>
 											<p>
-												We began CADding the flower, experimenting with different shapes, sizes, and configuration of petals and blooming mechanism. Since we wanted to go for a more delicate look, we decided to create a flower skeleton and attach petals made from another material to the skeleton petals. For this sprint, we 3D printed the flower skeleton in order to increase durability, color, and professionalism.
+												We began CADding the flower, experimenting with different shapes, sizes, and
+												configuration of petals and blooming mechanism. Since we wanted to go for a more
+												delicate look, we decided to create a flower skeleton and attach petals made
+												from another material to the skeleton petals. For this sprint, we 3D printed the
+												flower skeleton in order to increase durability, color, and professionalism.
 											</p>
 											<p>
 												[CAD of flower skeleton]
 											</p>
 											<p>
-												We experimented with various materials and shapes for the flower petals, finally deciding on paper petals that wrapped around the skeleton petals for a more delicate and light look. Our petals were white this sprint since we were more focused on exploring the shape of the flowers than the color.
+												We experimented with various materials and shapes for the flower petals, finally
+												deciding on paper petals that wrapped around the skeleton petals for a more
+												delicate and light look. Our petals were white this sprint since we were more
+												focused on exploring the shape of the flowers than the color.
 											</p>
 											<p>
-												This time, we got real hinges for the petals to attach to the flower base. We wanted to move away from coffee stirrers and string to push and pull the petals open and closed. We tried out piano wire and pipe cleaners, settling on the second one due to its relative ease in pushing and pulling the petals. However, we realized after we ran the bloom servo that the pipe cleaners were still quite stiff and giving the servo a more difficult time than the string and coffee stirrers had.
+												This time, we got real hinges for the petals to attach to the flower base. We
+												wanted to move away from coffee stirrers and string to push and pull the petals
+												open and closed. We tried out piano wire and pipe cleaners, settling on the
+												second one due to its relative ease in pushing and pulling the petals. However,
+												we realized after we ran the bloom servo that the pipe cleaners were still quite
+												stiff and giving the servo a more difficult time than the string and coffee
+												stirrers had.
 											</p>
 											<p>
-												We created an attachment that allows a second servo motor to hide behind the flower and turn it left and right, so the flower can both bloom and turn.
+												We created an attachment that allows a second servo motor to hide behind the
+												flower and turn it left and right, so the flower can both bloom and turn.
 											</p>
 											<p>
 												[Turn servo attachment]
@@ -105,13 +127,23 @@
 										<section>
 											<h3>Mechanical: archway</h3>
 											<p>
-												We decided this sprint that we wanted an archway in our MVP, so we constructed a sketch model out of cardboard as a proof of concept. We attached the turn servo to the archway so that the flower can bloom and turn on the archway. With an installation of a base to the legs of the arch, the archway was surprisingly sturdy enough to support the weight of the entire flower and and all the electronics within the hollow arch.
+												We decided this sprint that we wanted an archway in our MVP, so we constructed a
+												ketch model out of cardboard as a proof of concept. We attached the turn servo
+												to the archway so that the flower can bloom and turn on the archway. With an
+												installation of a base to the legs of the arch, the archway was surprisingly
+												sturdy enough to support the weight of the entire flower and and all the
+												electronics within the hollow arch.
 											</p>
 											<p>
 												[Cardboard archway]
 											</p>
 											<p>
-												We realized, however, that in order to increase to three to five flowers, we would need to significantly increase the sturdiness of the arch as well as reduce the weight of the flowers any way we could. In addition, the size of the flowers relative to the arch and the person walking through it was somewhat frightening. The 3D printed material also looked much less natural in contrast to the paper petals. In addition, the pipe cleaners were too noticeable, hairy, and stiff.
+												We realized, however, that in order to increase to three to five flowers, we would
+												need to significantly increase the sturdiness of the arch as well as reduce the
+												weight of the flowers any way we could. In addition, the size of the flowers relative
+												to the arch and the person walking through it was somewhat frightening. The 3D printed
+												material also looked much less natural in contrast to the paper petals. In addition,
+												the pipe cleaners were too noticeable, hairy, and stiff.
 											</p>
 											<p>
 												[Video of integrated blooming and turning flower]
@@ -121,19 +153,31 @@
 										<section>
 											<h3>Electrical</h3>
 											<p>
-												Like in the first sprint, we used a servo to rotate the center of the flower, either pulling the petals towards it so it closes or pushing the petals outwards so it blooms. We also wired a servo motor for lateral motion. We rested most of this motor inside the cardboard arch, allowing us to attach the flower to the arch while hiding its wires. With the Arduino and breadboard also inside the archway, we cut two holes for the wires of each motor to be contained inside the archway.
+												Like in the first sprint, we used a servo to rotate the center of the flower, either
+												pulling the petals towards it so it closes or pushing the petals outwards so it blooms.
+												We also wired a servo motor for lateral motion. We rested most of this motor inside the
+												cardboard arch, allowing us to attach the flower to the arch while hiding its wires.
+												With the Arduino and breadboard also inside the archway, we cut two holes for the wires
+												of each motor to be contained inside the archway.
 											</p>
 											<p>
 												[Bloom and turn servos]
 											</p>
 											<p>
-												We also wired a speaker through the bottom of the arch, where the arduino and breadboard were located, to the top of the arch, where the user can experience surround sound. We later removed this component from our project due to the increase in sensors and servos required.
+												We also wired a speaker through the bottom of the arch, where the arduino and breadboard
+												were located, to the top of the arch, where the user can experience surround sound. We
+												later removed this component from our project due to the increase in sensors and servos
+												required.
 											</p>
 											<p>
 												[Speake at the top of the arch]
 											</p>
 											<p>
-												We did not have enough time to test out the raspi and camera, so we reused the IR sensor as a tripwire, cutting a hole near the bottom of the archway for the sensor inside to detect the motion of someone walking by. Since we needed to calibrate our system to the archway, we wired the USB connecting to the arduino out of the archway to connect to a laptop for calibration purposes as well as power.
+												We did not have enough time to test out the raspi and camera, so we reused the IR sensor
+												as a tripwire, cutting a hole near the bottom of the archway for the sensor inside to
+												detect the motion of someone walking by. Since we needed to calibrate our system to the
+												archway, we wired the USB connecting to the arduino out of the archway to connect to a
+												laptop for calibration purposes as well as power.
 											</p>
 											<p>
 												[“Hidden” IR sensor]
@@ -151,7 +195,13 @@
 										<section>
 											<h3>Software</h3>
 											<p>
-												We did not have enough time to test out the raspi and camera this sprint, so we decided to reuse the IR sensor tripwire code to set off the flower motions. This time, we added an additional turning function. When the tripwire is set off, the flower blooms and turns at a preset speed to follow the person through the archway before the turning back and closing again. We also programmed a melody to play when the flower has bloomed and turned using the tone function. We hard-coded the melody and beats and ran through the song in a for loop.
+												We did not have enough time to test out the raspi and camera this sprint, so we decided
+												to reuse the IR sensor tripwire code to set off the flower motions. This time, we added
+												an additional turning function. When the tripwire is set off, the flower blooms and
+												turns at a preset speed to follow the person through the archway before the turning
+												back and closing again. We also programmed a melody to play when the flower has bloomed
+												and turned using the tone function. We hard-coded the melody and beats and ran through
+												the song in a for loop.
 											</p>
 										</section>
 
