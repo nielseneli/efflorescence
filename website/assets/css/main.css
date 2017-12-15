@@ -1639,10 +1639,10 @@
 
 	#banner-wrapper {
 		position: relative;
-		background-image: url("images/overlay.png"), url("images/overlay.png"), url("../../images/banner.jpg");
+		background-image: url('https://lh3.googleusercontent.com/dZNXt4oX0pIwAGJeZOmh2fsbolWC4i4KbJ0z099LsXpVKqUCgr3DVFSeHRwGW3cKQ2mv1P7EfX3H7AW6E07JdlSizDC8nqyHeoFd8-Wc3zqOlIRpevHOO0o7deGxX_OZ7iOxpk5w_CFOsSAg3d_B3gE1lvpQ3jBZQU2l0ucTXzOR-GbYAG5UQcmjD3IooELAGpozIn6EBYQPjqUQ6AzAR1IKWVxhi2H9CqJWmZfUc7xXjK3-Ewj68D08_yXdIQn1GFsYcnAi5KfUZvNohnVtGeGF2xSPszhf5PU67232wYd3aLz_PCUkc6OsPlxqptjMOTelR5iPZFhVmT7wGEk4Lo1EVSL-kbH5mv41l_ED8F7vlyEmu4hqprfOi1U0FpuJ6sx1jz-Ou7w07ODP7j985gApt2O-QrU5uJRDnPd1vjPE9D6Scf8f9b4gc5BVQGVFVWGmtALodrYI2rkPkAXJpu25BRsL3GVKiPKEgKnP8mCMB0txDEmfDBZ7cOq3hRcHWajtxewtXaMyVopI_HLraVuUSaxwIt75MYSFg8bUtq4VKhWORjY-5sD70Hd4VRCjiI8cPDt_47EHJDhHZpzf9vHP5qPB_O6RUAZrukN41A=w1495-h405-no');
 		background-position: top left, top left, center center;
-		background-repeat: repeat, repeat, no-repeat;
-		background-size: auto, auto, cover;
+		background-repeat: no-repeat;
+		background-size: cover;
 		z-index: 1;
 	}
 
@@ -1656,7 +1656,7 @@
 
 	#banner {
 		position: relative;
-		background-color: rgba(21, 28, 23, 0.85);
+		background-color: rgba(211,211,211, 0.85);
 		background-image: url("images/overlay.png"), url("images/highlight.png");
 		background-position: top left, center center;
 		background-size: auto, 100% 250%;
