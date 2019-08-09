@@ -1,6 +1,5 @@
 /*
   Main
-
   Causes flower to bloom and turn when the sensor detects motion
   within two feet of the front of the archway. Plays the C scale
   at the same time.
@@ -11,6 +10,9 @@
 #include "Sensor.h"
 #include <VL53L0X.h>
 
+/****************
+ * INITIALIZING *
+ ****************/
 // Initialize VL53L0X sensors
 VL53L0X sensor0;
 VL53L0X sensor1;
@@ -19,172 +21,217 @@ VL53L0X sensor3;
 VL53L0X sensor4;
 
 // Initialize servos
-Servo bloom0;
-Servo turn0;
-Servo bloom1;
-Servo turn1;
-Servo bloom2;
-Servo turn2;
-Servo bloom3;
-Servo turn3;
+Servo bloomLeft;
+Servo turnLeft;
+Servo bloomRight;
+Servo turnRight;
 
 // Servo edge values
 // Bloom edges
-int closed = 60;
-int opened = 0;
-// Turn edges
-int enter = 35;
-int leave = 85;
+const int opened = 60;
+const int closed = 0;
+const int bloomDiff = opened - closed;
 
-// Set temp bloomPos variables to beginning vals
+// Turn edges
+const int enter = 35;
+const int leave = 115;
+const int turnDiff = leave - enter;
+
+// millis
+unsigned long prevMillis = 0;
+unsigned long currentMillis = 0;
+const int checkDelay = 1000;
+
+// Set position variables to beginning vals
 int bloomPos = closed;
 int turnPos = enter;
 
 // Initialize triggered-sensor-holding variable
 int triggedSensors;
 
-/* Write a position to all bloom motors */
-void writeBlooms(int pos) {
-  bloom0.write(pos);
-  bloom1.write(pos);
-  bloom2.write(pos);
-  bloom3.write(pos);
+/*************
+ * FUNCTIONS *
+ *************/
+// Functions to open and close the flowers
+void openBlooms(int &bloomPos) {
+  bloomPos += 5;
+  bloomLeft.write(bloomPos);
+  bloomRight.write(bloomPos);
+}
+void closeBlooms(int &bloomPos) {
+  bloomPos -= 5;
+  bloomLeft.write(bloomPos);
+  bloomRight.write(bloomPos);
 }
 
-/* Write a position to all turn motors */
-void writeTurns(int pos) {
-  turn0.write(pos);
-  turn1.write(pos);
-  turn2.write(pos);
-  turn3.write(pos);
+// Functions to turn and return the flowers
+void turn(int &turnPos) {
+  turnPos += 5;
+  turnLeft.write(turnPos);
+  turnRight.write(140-turnPos);
+  delay(5);
+}
+void reTurn(int &turnPos) {
+  turnPos -= 5;
+  turnLeft.write(turnPos);
+  turnRight.write(140-turnPos);
+  delay(5);
 }
 
-/* Returns value indicating which sensors are activated */
+// Returns value indicating which sensors are activate
 int whichSensors() {
   int whichSensors = 0;
 
-  if (sensorTriggered(sensor0, 300, 700)) {
+  if (sensorTriggered(sensor0, 250, 900)) {
     whichSensors += 1;
   }
-  if (sensorTriggered(sensor1, 400, 600)) {
+  if (sensorTriggered(sensor1, 250, 900)) {
     whichSensors += 2;
   }
-  if (sensorTriggered(sensor2, 300, 450)) {
+  if (sensorTriggered(sensor2, 150, 900)) {
     whichSensors += 4;
   }
-  if (sensorTriggered(sensor3, 400, 600)) {
+  if (sensorTriggered(sensor3, 300, 1000)) {
     whichSensors += 8;
   }
-  if (sensorTriggered(sensor4, 300, 700)) {
+  if (sensorTriggered(sensor4, 250, 1000)) {
     whichSensors += 16;
   }
   return whichSensors;
 }
 
+/*********
+ * SETUP *
+ *********/
 void setup() {
   // Set unique IDs for the sensors
   sensorsRename();
   // Begin continuous read mode on sensors
   sensorsBegin();
-
+  Serial.println("everything still fine");
   // Attach servos
-  bloom0.attach(2);
-  turn0.attach(3);
-  bloom1.attach(10);
-  turn1.attach(11);
-  bloom2.attach(4);
-  turn2.attach(5);
-  bloom3.attach(12);
-  turn3.attach(13);
+  bloomLeft.attach(5);
+  turnLeft.attach(6);
+  bloomRight.attach(10);
+  turnRight.attach(11);
 
   // Set servos to starting position
-  writeBlooms(bloomPos);
-  writeTurns(turnPos);
+  bloomLeft.write(opened);
+  turnLeft.write(opened);
+  bloomRight.write(enter);
+  turnRight.write(140-enter);
 }
 
+/********
+ * LOOP *
+ ********/
 void loop() {
-  // test the sensors
-  sensorReadSerial();
   // Check which sensors are triggered
   triggedSensors = whichSensors();
 
   // Move based on which sensors are triggered
   switch (triggedSensors) {
     case 1:                           /* 0         */
+    case 2:                           /*   1       */
+    case 3:                           /* 0 1       */
+      prevMillis = millis();
       // Begin turning
-      if (turnPos >= 35 && turnPos < 48) {
-        turnPos += 5;
-        writeTurns(turnPos);
+      if (turnPos >= enter && turnPos < enter + turnDiff/3) {
+        turn(turnPos);
       }
       // Begin blooming
-      if (bloomPos > 0) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
+      if (bloomPos < opened) {
+        openBlooms(bloomPos);
       }
       break;
     case 5:                           /* 0   2     */
+    case 6:                           /*   1 2     */
+    case 7:                           /* 0 1 2     */
+      prevMillis = millis();
+      // Turn some more
+      if (turnPos >= enter && turnPos < leave - turnDiff/2) {
+        turn(turnPos);
+      }
+      // Bloom some more
+      if (bloomPos < opened) {
+        openBlooms(bloomPos);
+      }
+      break;
     case 4:                           /*     2     */
-      // Bloom
-      if (bloomPos > 0) {
-        bloomPos -= 5;
-        writeBlooms(bloomPos);
+    case 14:                          /*   1 2 3   */
+      prevMillis = millis();
+      // Keep on turning
+      if (turnPos >= enter && turnPos < leave - turnDiff/3) {
+        turn(turnPos);
       }
-      // Turn
-      if (turnPos >= 35 && turnPos < 62) {
-        turnPos += 5;
-        writeTurns(turnPos);
+      // Keep blooming
+      if (bloomPos < opened) {
+        openBlooms(bloomPos);
       }
       break;
-
-    // Sensors 4 or 2,4 or 0,2,4 are triggered
+    case 8:                           /*       3   */
     case 20:                          /*     2   4 */
-    case 16:                          /*         4 */
-      if (bloomPos < 60) {
-        bloomPos += 5;
-        writeBlooms(bloomPos);
+    case 12:                          /*     2 3   */
+      prevMillis = millis();
+      // Keep on turning
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
       }
-      // Turn
-      if (turnPos >= 35 && turnPos < 85) {
-        turnPos += 5;
-        writeTurns(turnPos);
+      // Start unblooming
+      if (bloomPos > closed) {
+        closeBlooms(bloomPos);
       }
       break;
-
-    // No sensors triggered
-    case 0:                          /*           */
+    case 16:                          /*         4 */
+    case 24:                          /*       3 4 */
+    case 28:                          /*     2 3 4 */
+      prevMillis = millis();
+      // Keep on turning
+      if (turnPos >= enter && turnPos < leave) {
+        turn(turnPos);
+      }
+      // Start unblooming
+      if (bloomPos > closed) {
+        closeBlooms(bloomPos);
+      }
+      break;
+    case 0:                           /*           */
+      // check millis
+      currentMillis = millis();
+      if (currentMillis - prevMillis <= checkDelay) {
+        break;
+      }
       // Do nothing if they're both set already
-      if (bloomPos == 60 && turnPos == 35) {
+      if (bloomPos == closed && turnPos == enter) {
         break;
       }
       // Reset turn motor if bloom is set
-      while (turnPos > 35 && bloomPos == 60) {
-        writeTurns(turnPos);
-        turnPos--;
-        delay(20);
+      while (turnPos > enter && bloomPos == closed) {
+        reTurn(turnPos);
+        delay(30);
       }
       // Reset bloom motor if turn is set
-      while (bloomPos < 60 && turnPos == 35) {
-        writeBlooms(bloomPos);
-        bloomPos++;
-        delay(20);
+      while (bloomPos > closed && turnPos == enter) {
+        closeBlooms(bloomPos);
+        delay(30);
       }
       // Turn them both if neither are set
-      while (bloomPos < 60 && turnPos > 35) {
-        bloomPos++;
-        turnPos--;
-        writeBlooms(bloomPos);
-        writeTurns(turnPos);
-        delay(20);
+      while (bloomPos > closed && turnPos > enter) {
+        closeBlooms(bloomPos);
+        reTurn(turnPos);
+        delay(30);
       }
   }
+  
 
   // Uncomment to simplify debugging
-  //  Serial.print(triggedSensors);
-  //  Serial.print(',');
-  //  Serial.print(bloomPos);
-  //  Serial.print(',');
-  //  Serial.println(turnPos);
-  delay(100);
+    Serial.print(triggedSensors);
+    Serial.print(',');
+//    Serial.print(bloomPos);
+//    Serial.print(',');
+//    Serial.print(turnPos);
+//    Serial.print(',');
+    sensorReadSerial();
 
 }
 
